@@ -3,9 +3,9 @@ package a01
 /**
  *
  *
- * @author Thomas Grottker
+ * @author Dennis Koenig
  * @date: 13.10.11
- * @time: 17:04
+ * @time: 17:25
  */
 
 object Disk {

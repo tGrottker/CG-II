@@ -1,11 +1,11 @@
 package a01
 
 /**
- * Created by IntelliJ IDEA.
- * User: Dennis
- * Date: 13.10.11
- * Time: 17:18
- * To change this template use File | Settings | File Templates.
+ *
+ *
+ * @author Dennis Koenig
+ * @date: 13.10.11
+ * @time: 17:25
  */
 
 object CheckerBoard {
