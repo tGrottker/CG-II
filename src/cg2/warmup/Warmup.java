@@ -1,5 +1,8 @@
 package cg2.warmup;
 
+import a01.SimpleCheckerBoard;
+import a01.SimpleDisc;
+
 public class Warmup {
 
 	  public static void main(String[] args) {
@@ -10,14 +13,16 @@ public class Warmup {
 		  // ************ test painting a checkerboard ************ 
 		  {
 			  String filename = path + "/" + "checkerboard.png";
-			  new ImageGenerator(new Checkerboard(), 750, 750, filename, "png");
-			  ImageGenerator.showImage(filename);
-		  } 
-		  
-		  // ************ test painting a disk ************ 
+			  new ImageGenerator(new SimpleCheckerBoard(), 750, 750, filename, "png");
+			  //ImageGenerator.showImage(filename);
+		  }
+
+          // ************ test painting a disk ************
 		  {
-			  // ...	
-		  }	  
+              String filename = path + "/" + "disc.png";
+              new ImageGenerator(new SimpleDisc(), 750, 750, filename, "png");
+              //ImageGenerator.showImage(filename);
+          }
 		  
 	  }
 
