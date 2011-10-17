@@ -3,7 +3,7 @@ package raytracer.geometry
 import cg2.vecmath.Vector
 
 /**
- *
+ * Representation of a ray in a 3D-coordinate-system.
  *
  * @author Thomas Grottker
  * @date 17.10.11
