@@ -1,6 +1,6 @@
 package raytracer.geometry.shape
 
-import cg2.vecmath.Vector
+import cg2.vecmath.{Color, Vector}
 
 /**
  * Representation of a plane.
@@ -9,6 +9,6 @@ import cg2.vecmath.Vector
  * @date 17.10.11
  * @time 12:30
  */
-case class Plane(origin: Vector, normal: Vector) {
+case class Plane(origin: Vector, normal: Vector, color: Color) extends Shape{
 
 }
