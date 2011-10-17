@@ -1,4 +1,4 @@
-package a01
+package warmup
 
 import cg2.warmup.Painter
 import cg2.vecmath.Color

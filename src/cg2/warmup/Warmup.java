@@ -1,7 +1,7 @@
 package cg2.warmup;
 
-import a01.SimpleCheckerBoard;
-import a01.SimpleDisc;
+import warmup.SimpleCheckerBoard;
+import warmup.SimpleDisc;
 
 public class Warmup {
 
