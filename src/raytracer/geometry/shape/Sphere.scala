@@ -1,7 +1,6 @@
-package raytracer.shape
+package raytracer.geometry.shape
 
 import cg2.vecmath.Vector
-import raytracer.geometry.Ray
 
 /**
  * Representation of a sphere.

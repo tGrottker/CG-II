@@ -1,4 +1,4 @@
-package raytracer.shape
+package raytracer.geometry.shape
 
 import cg2.vecmath.Vector
 
