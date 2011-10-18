@@ -7,7 +7,7 @@ package raytracer
  * @date 17.10.11
  * @time 17:50
  */
-object Main {
+object Raytracer {
 
   def main(args: Array[String]){
     println("compiles")
