@@ -17,7 +17,11 @@ case class Plane(origin: Vector, normal: Vector, color: Color) extends ColoredSh
    */
   override def hit(ray: Ray): Boolean = {
     // DENNIS!!!
-    true
+    // Vektor Normale x  Richtungs Vektor aus dem Ray (Skalarprodukt) != 0 => true    dot Methode
+
+    val s = normal.dot(ray.direction)
+    if (s!=0) return true
+    false
   }
 
   /**
@@ -26,6 +30,7 @@ case class Plane(origin: Vector, normal: Vector, color: Color) extends ColoredSh
   override def intersect(ray: Ray): Vector = {
     if (!hit(ray)) throw new NoHitException("The ray: " + ray + " does not hit this shape: " + this)
     // DENNIS!!!
+    //Seite 19
     new Vector(0,0,0)   // TODO override standard
   }
 
