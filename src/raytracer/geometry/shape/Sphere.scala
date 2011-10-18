@@ -10,10 +10,10 @@ import cg2.vecmath.{Vector, Color}
  * @date 17.10.11
  * @time 12:28
  */
-case class Sphere(center: Vector, radius: Float, color: Color) extends Shape{
+case class Sphere(center: Vector, radius: Float, color: Color) extends ColoredShape{
 
   /**
-   * @inheritdoc
+   * @inheritDoc
    */
   override def hit(ray: Ray): Boolean = {
     val a = ray.origin.dot(ray.direction)
@@ -23,7 +23,7 @@ case class Sphere(center: Vector, radius: Float, color: Color) extends Shape{
   }
 
   /**
-   * @inheritdoc
+   * @inheritDoc
    */
   override def intersect(ray: Ray): Vector = {
     if (!hit(ray)) throw new NoHitException("The ray: " + ray + " does not hit this shape: " + this)
@@ -36,6 +36,13 @@ case class Sphere(center: Vector, radius: Float, color: Color) extends Shape{
     val ret2 = ray.origin.add(ray.direction.mult(t2.floatValue()))
     if (ret1.z < ret2.z) return ret1
     ret2
+  }
+
+  /**
+   * @inheritDoc
+   */
+  override def getColor(point: Vector): Color = {
+    color
   }
 
 }

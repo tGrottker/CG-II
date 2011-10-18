@@ -20,13 +20,4 @@ trait Shape {
    */
   def hit(ray: Ray): Boolean
 
-  /**
-   * Checks where a ray hits the shape.
-   *
-   * @param ray The ray, which should be checked, where it hits the shape.
-   * @return The point where the ray hits the shape.
-   * @throws NoHitException
-   */
-  def intersect(ray: Ray): Vector
-
 }

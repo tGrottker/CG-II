@@ -10,10 +10,10 @@ import raytracer.geometry.Ray
  * @date 17.10.11
  * @time 12:30
  */
-case class Plane(origin: Vector, normal: Vector, color: Color) extends Shape{
+case class Plane(origin: Vector, normal: Vector, color: Color) extends ColoredShape{
 
   /**
-   * @inheritdoc
+   * @inheritDoc
    */
   override def hit(ray: Ray): Boolean = {
     // DENNIS!!!
@@ -21,13 +21,19 @@ case class Plane(origin: Vector, normal: Vector, color: Color) extends Shape{
   }
 
   /**
-   * @inhaitdoc
+   * @inheritDoc
    */
   override def intersect(ray: Ray): Vector = {
     if (!hit(ray)) throw new NoHitException("The ray: " + ray + " does not hit this shape: " + this)
     // DENNIS!!!
-    // TODO override standard
-    new Vector(0,0,0)
+    new Vector(0,0,0)   // TODO override standard
+  }
+
+  /**
+   * @inheritDoc
+   */
+  override def getColor(point: Vector): Color = {
+    color
   }
 
 }

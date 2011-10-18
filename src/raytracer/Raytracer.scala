@@ -10,7 +10,7 @@ package raytracer
 object Raytracer {
 
   def main(args: Array[String]){
-    println("compiles")
+
   }
 
 }
