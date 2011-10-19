@@ -31,6 +31,13 @@ case class Plane(origin: Vector, normal: Vector, color: Color) extends ColoredSh
     if (!hit(ray)) throw new NoHitException("The ray: " + ray + " does not hit this shape: " + this)
     // DENNIS!!!
     //Seite 19
+    val z1=normal.dot(ray.origin)
+    val z2=normal.dot(origin)
+    val m=(z1-z2)/(normal.dot(ray.direction))
+
+    //Formel 2
+    //var temp= m*ray.direction
+    //var p=ray.origin.add(temp)
     new Vector(0,0,0)   // TODO override standard
   }
 
