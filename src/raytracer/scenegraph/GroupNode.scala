@@ -3,11 +3,14 @@ package raytracer.scenegraph
 import cg2.vecmath.Matrix
 
 /**
- *
+ * A SceneNode with other SceneNodes at its leaves.
  *
  * @author Thomas Grottker
  * @date 20.10.11
  * @time 14:17
+ *
+ * @inheritDoc
+ * @param children A List of all children, an empty List per default.
  */
 case class GroupNode(name: String, transform: Matrix, var children: List[SceneNode] = List()) extends SceneNode(name, transform){
 

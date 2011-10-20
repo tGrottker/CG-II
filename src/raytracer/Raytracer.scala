@@ -1,10 +1,7 @@
 package raytracer
 
-import scenegraph.GroupNode
-import cg2.vecmath.Matrix
-
 /**
- *
+ * Main class of the raytracer.
  *
  * @author Thomas Grottker
  * @date 17.10.11

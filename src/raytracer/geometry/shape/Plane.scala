@@ -9,6 +9,10 @@ import raytracer.geometry.Ray
  * @author Thomas Grottker
  * @date 17.10.11
  * @time 12:30
+ *
+ * @param origin The origin of the plane.
+ * @param normal The normal of the plane, should be standardised.
+ * @param color The color of the Plane.
  */
 case class Plane(origin: Vector, normal: Vector, color: Color) extends ColoredShape{
 

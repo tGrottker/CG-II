@@ -1,7 +1,6 @@
 package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
-import cg2.vecmath.Vector
 
 /**
  * The base class of all shapes.
