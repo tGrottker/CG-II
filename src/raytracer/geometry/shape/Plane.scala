@@ -6,7 +6,7 @@ import raytracer.geometry.Ray
 /**
  * Representation of a plane.
  *
- * @author Thomas Grottker
+ * @author Thomas Grottker, Dennis Koenig
  * @date 17.10.11
  * @time 12:30
  *
