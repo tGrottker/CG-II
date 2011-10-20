@@ -1,5 +1,8 @@
 package raytracer
 
+import scenegraph.GroupNode
+import cg2.vecmath.Matrix
+
 /**
  *
  *
@@ -10,6 +13,8 @@ package raytracer
 object Raytracer {
 
   def main(args: Array[String]){
+
+
 
   }
 
