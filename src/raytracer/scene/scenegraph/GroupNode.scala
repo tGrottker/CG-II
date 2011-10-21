@@ -1,4 +1,4 @@
-package raytracer.scenegraph
+package raytracer.scene.scenegraph
 
 import cg2.vecmath.Matrix
 

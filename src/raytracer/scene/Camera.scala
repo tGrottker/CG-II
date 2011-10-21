@@ -10,10 +10,11 @@ import cg2.vecmath.Vector
  * @time 16:25
  *
  * @param eyePosition The position of the camera, the originating Vector per default.
- * @param upVector The Vector, defining the top of the Camera.
+ * @param gazeDirection The gaze direction of the Camera, the negative z-direction per default.
+ * @param upVector The top of the Camera, the y-direction per default.
  * @param angle The angle of beam of the Camera.
  * @param aspectRatio The aspect ratio of the Camera.
  */
-case class Camera(eyePosition: Vector = new Vector(0,0,0), upVector: Vector, angle: Float, aspectRatio: Float) {
+case class Camera(eyePosition: Vector = new Vector(0,0,0), gazeDirection: Vector = new Vector(0,0,-1), upVector: Vector = new Vector(0, 1, 0), angle: Float, aspectRatio: Float) {
 
 }

@@ -10,11 +10,11 @@ import cg2.vecmath.{Vector, Color}
  * @date 17.10.11
  * @time 12:28
  *
- * @param center The center of the Sphere.
+ * @param center The center of the Sphere, the origin per default.
  * @param radius The radius of the Sphere.
  * @param color The color of the Sphere.
  */
-case class Sphere(center: Vector, radius: Float, color: Color) extends ColoredShape{
+case class Sphere(center: Vector = new Vector(0,0,0), radius: Float, color: Color) extends ColoredShape{
 
   /**
    * @inheritDoc
