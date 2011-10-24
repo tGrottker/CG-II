@@ -3,7 +3,7 @@ package raytracer
 import cg2.warmup.Painter
 import geometry.shape.{ColoredShape, Sphere}
 import scene.{Scene, Camera}
-import cg2.vecmath.{Vector, Color, Matrix}
+import cg2.vecmath.{Vector, Color}
 
 /**
  * Main class of the raytracer.
@@ -27,8 +27,8 @@ class Raytracer extends Painter{
     val hit = scene.intersect(ray)
     //if (hit != None) println(hit)
     hit.getOrElse(return new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())).getShape match {
-      case cs: ColoredShape => return cs.getColor(hit.get.getPoint)
-      case _ => return new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())
+      case cs: ColoredShape => cs.getColor(hit.get.getPoint)
+      case _ => new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())
     }
 
   }
