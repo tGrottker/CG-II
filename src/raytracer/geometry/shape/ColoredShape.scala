@@ -10,16 +10,7 @@ import cg2.vecmath.{Color, Vector}
  * @date 18.10.11
  * @time 13:16
  */
-trait ColoredShape extends Shape{
-
-  /**
-     * Checks where a ray hits the shape.
-     *
-     * @param ray The ray, which should be checked, where it hits the shape.
-     * @return The point where the ray hits the shape.
-     * @throws NoHitException If the ray does not hit the shape.
-     */
-    def intersect(ray: Ray): Vector
+trait ColoredShape {
 
   /**
    * Calculates the color of the point.
