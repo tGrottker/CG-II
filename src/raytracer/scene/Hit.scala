@@ -1,5 +1,8 @@
 package raytracer.scene
 
+import raytracer.geometry.shape.Shape
+import cg2.vecmath.Vector
+
 /**
  *
  *
@@ -7,8 +10,10 @@ package raytracer.scene
  * @date 24.10.11
  * @time 10:42
  */
-class Hit(point: Vector) {
+case class Hit(point: Vector, shape: Shape) {
 
   def getPoint = point
+
+  def getShape = shape
 
 }

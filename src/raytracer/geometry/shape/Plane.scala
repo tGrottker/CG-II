@@ -20,11 +20,8 @@ case class Plane(origin: Vector, normal: Vector, color: Color) extends Shape wit
    * @inheritDoc
    */
   override def intersect(ray: Ray): Option[Vector] = {
-    //Formel 1
     if (normal.dot(ray.direction) == 0) return None
-    val z1 = normal.dot(ray.origin)
-    val z2 = normal.dot(origin)
-    val m = (z1-z2)/(normal.dot(ray.direction))
+    val m = (normal.dot(ray.origin) - normal.dot(origin)) / normal.dot(ray.direction)
 
     Some(ray.getPoint(m))
   }

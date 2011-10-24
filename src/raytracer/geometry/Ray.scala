@@ -12,7 +12,11 @@ import cg2.vecmath.Vector
  * @param origin The origin of the ray.
  * @param direction The direction of the ray, should be normalized.
  */
-case class Ray(origin: Vector, direction: Vector) {
+case class Ray(ori: Vector, dir: Vector) {
+
+  def origin = ori
+
+  def direction = dir.normalize()
 
   def getPoint(factor: Float): Vector = origin.add(direction.mult(factor))
 

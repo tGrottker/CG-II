@@ -1,5 +1,6 @@
 package cg2.warmup;
 
+import raytracer.Raytracer;
 import warmup.SimpleCheckerBoard;
 import warmup.SimpleDisc;
 
@@ -12,18 +13,24 @@ public class Warmup {
 		  
 		  // ************ test painting a checkerboard ************ 
 		  {
-			  String filename = path + "/" + "checkerboard.png";
-			  new ImageGenerator(new SimpleCheckerBoard(), 750, 750, filename, "png");
+		//	  String filename = path + "/" + "checkerboard.png";
+		//	  new ImageGenerator(new SimpleCheckerBoard(), 750, 750, filename, "png");
 			  //ImageGenerator.showImage(filename);
 		  }
 
           // ************ test painting a disk ************
 		  {
-              String filename = path + "/" + "disc.png";
-              new ImageGenerator(new SimpleDisc(), 750, 750, filename, "png");
+         //     String filename = path + "/" + "disc.png";
+         //     new ImageGenerator(new SimpleDisc(), 750, 750, filename, "png");
               //ImageGenerator.showImage(filename);
           }
-		  
+
+
+          // ************ testing a Raytracer ************
+          {
+              String filename = path + "/" + "raytracer.png";
+              new ImageGenerator(new Raytracer(), 750, 750, filename, "png");
+          }
 	  }
 
 }
