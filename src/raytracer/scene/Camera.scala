@@ -15,7 +15,7 @@ import cg2.vecmath.Vector
  * @param upVector The top of the Camera, the y-direction per default, should be normalized.
  * @param angle The angle of beam of the Camera.
  * @param width The of the near plane, 1 per default.
- * @param aspectRatio The aspect ratio of the near Plane.
+ * @param aspectRatio The aspect ratio of the near ColoredPlane.
  */
 class Camera(eyePosition: Vector = new Vector(0,0,0), gazeDirection: Vector = new Vector(0,0,-1), upVector: Vector = new Vector(0, 1, 0), angle: Float, width: Float = 1, aspectRatio: Float = 4/3.floatValue()) {
 
