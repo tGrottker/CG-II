@@ -19,7 +19,7 @@ class Raytracer extends Painter{
   val sphere2 = new Sphere(new Vector(-1, 0, -18), radius = 1, new Color(0,1,0))
   val sphere3 = new Sphere(new Vector( 1, 0, -20), radius = 1, new Color(0,0,1))
   val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new Color(0,0,0.6F))
-  val plane = new Plane(new Vector( 0, 0.5F, 0), new Vector( 0, 1, 0), new Color(0.8F,0,0))
+  val plane = new Plane(new Vector( 0, -0.5F, 0), new Vector( 0, 1, 0), new Color(0.8F,0,0))
 
   val scene = new Scene(List(sphere, sphere2, sphere3, sphere4, plane))
 
