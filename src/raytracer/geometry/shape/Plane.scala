@@ -4,7 +4,7 @@ import raytracer.geometry.Ray
 import cg2.vecmath.Vector
 
 /**
- *
+ * Representation of an invisible plane.
  *
  * @author Thomas Grottker
  * @date 25.10.11

@@ -3,7 +3,7 @@ package raytracer.geometry.shape
 import cg2.vecmath.{Color, Vector}
 
 /**
- * Representation of a plane.
+ * Representation of a visible plane.
  *
  * @author Thomas Grottker, Dennis Koenig
  * @date 17.10.11
