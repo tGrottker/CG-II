@@ -1,9 +1,9 @@
 package raytracer
 
-import cg2.warmup.Painter
 import geometry.shape.{ColoredShape, Sphere, Plane}
 import scene.{Scene, Camera}
 import cg2.vecmath.{Color, Vector}
+import cg2.warmup.{ImageGenerator, Painter}
 
 /**
  * Main class of the raytracer.
@@ -15,24 +15,33 @@ import cg2.vecmath.{Color, Vector}
 class Raytracer extends Painter{
 
   val cam = new Camera(angle = 30, aspectRatio = 1)
-  val sphere  = new Sphere(new Vector( 0, 0, -15), 1, new Color(1,0,0))
-  //val sphere2 = new Sphere(new Vector(-1, 0, -18), 1, new Color(0,1,0))
-  //val sphere3 = new Sphere(new Vector( 1, 0, -20), 1, new Color(0,0,1))
-  val plane = new Plane(new Vector( 1, 0, -10), new Vector( 1, 0, -20),new Color(1,0.5F,0))
+  val sphere  = new Sphere(new Vector( 0, 0, -15), radius = 1, new Color(1,0,0))
+  val sphere2 = new Sphere(new Vector(-1, 0, -18), radius = 1, new Color(0,1,0))
+  val sphere3 = new Sphere(new Vector( 1, 0, -20), radius = 1, new Color(0,0,1))
+  val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new Color(0,0,0.6F))
+  val plane = new Plane(new Vector( 0, 0.5F, 0), new Vector( 0, 1, 0), new Color(0.8F,0,0))
 
-  val scene = new Scene(List(sphere, plane))
+  val scene = new Scene(List(sphere, sphere2, sphere3, sphere4, plane))
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
 
     val ray = cam.getRay(x, y, nx, ny)
-    //println(ray)
     val hit = scene.intersect(ray)
-    //if (hit != None) println(hit)
     hit.getOrElse(return new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())).getShape match {
       case cs: ColoredShape => cs.getColor(hit.get.getPoint)
       case _ => new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())
     }
 
+  }
+
+}
+
+object Main{
+
+  def main(args: Array[String]){
+    val path = System.getProperty("user.home")
+    val fileName = path + "/" + "raytracer.png"
+    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
   }
 
 }

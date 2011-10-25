@@ -16,6 +16,8 @@ import raytracer.geometry.Ray
  */
 case class Plane(origin: Vector, normal: Vector, color: Color) extends Shape with ColoredShape{
 
+  // TODO y-axis is inverted
+
   /**
    * @inheritDoc
    */
