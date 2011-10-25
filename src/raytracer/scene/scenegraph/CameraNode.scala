@@ -13,6 +13,6 @@ import raytracer.scene.Camera
  * @inheritDoc
  * @param camera The Camera of the Scene.
  */
-case class CameraNode(name: String, transform: Matrix, camera: Camera) extends SceneNode(name, transform){
+case class CameraNode(name: String, transform: Matrix, mother: Option[SceneNode], camera: Camera) extends SceneNode(name, transform, mother){
 
 }

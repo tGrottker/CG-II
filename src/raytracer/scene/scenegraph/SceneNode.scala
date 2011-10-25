@@ -11,7 +11,17 @@ import cg2.vecmath.Matrix
  *
  * @param name The name of the SceneNode.
  * @param transform The transformation of the SceneNode.
+ * @param mother The mother node. Is None if it is the root.
  */
-abstract class SceneNode(name: String, transform: Matrix) {
+abstract case class SceneNode(name: String, transform: Matrix, mother: Option[SceneNode]) {
+
+  /**
+   * Returns the absolute transformation beginning with the root.
+   *
+   * @return The absolute transformation of the SceneNode.
+   */
+  def getAbsoluteTransform: Matrix = {
+    mother.getOrElse(return transform).getAbsoluteTransform.mult(transform)
+  }
 
 }

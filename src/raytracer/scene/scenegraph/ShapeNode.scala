@@ -1,7 +1,8 @@
 package raytracer.scene.scenegraph
 
+import raytracer.geometry.Ray
+import cg2.vecmath.{Vector, Matrix}
 import raytracer.geometry.shape.Shape
-import cg2.vecmath.Matrix
 
 /**
  * A SceneNode with a Shape at its leaf.
@@ -11,8 +12,10 @@ import cg2.vecmath.Matrix
  * @time 14:17
  *
  * @inheritDoc
- * @param shape The shape.
+ * @param shape The Shape.
  */
-case class ShapeNode(name: String, transform: Matrix, shape: Shape) extends SceneNode(name, transform){
+case class ShapeNode(name: String, transform: Matrix, mother: Option[SceneNode], shape: Shape) extends SceneNode(name, transform, mother){
+
+  def intersect(ray: Ray): Option[Vector] = shape.intersect(ray)
 
 }
