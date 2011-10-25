@@ -2,6 +2,7 @@ package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
 import cg2.vecmath.Vector
+import raytracer.scene.Hit
 
 /**
  * 
@@ -27,9 +28,31 @@ class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
    * @inheritDoc
    */
   override def intersect(ray: Ray): Option[Vector] = {
+     var hits: List[Hit] = List()
+     planes.foreach(plane => {
+     val a = plane.intersect(ray)
+      if (a != None) hits = new Hit(a.get, this) :: hits
+    })
 
+    var closestHit: Option[Hit] = None
 
-    None
+    hits.foreach(hit => {
+      if (hit.getPoint.z < 0) {
+        hit.getShape match{
+          case _: ColoredShape => {
+            if (closestHit == None) closestHit = Some(hit)
+            else {
+              if (closestHit.get.getPoint.z.abs > hit.getPoint.z.abs) closestHit = Some(hit)
+            }
+          }
+          case _ =>
+        }
+      }
+    })
+
+    val hit = closestHit.getOrElse(return None).getPoint
+    Some(hit)
+    //None
   }
 
 }
