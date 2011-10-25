@@ -13,8 +13,6 @@ import raytracer.geometry.Ray
 
 class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
 
-
-
   /**
    * @inheritDoc
    */
