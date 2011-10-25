@@ -1,9 +1,10 @@
 package raytracer
 
 import geometry.shape.{ColoredShape, Sphere, ColoredPlane}
+import scene.scengraph.GroupNode
 import scene.{Scene, Camera}
-import cg2.vecmath.{Color, Vector}
 import cg2.warmup.{ImageGenerator, Painter}
+import cg2.vecmath.{Vector, Matrix, Color}
 
 /**
  * Main class of the raytracer.
@@ -39,9 +40,10 @@ class Raytracer extends Painter{
 object Main{
 
   def main(args: Array[String]){
-    val path = System.getProperty("user.home")
-    val fileName = path + "/" + "raytracer.png"
-    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+
+    //val path = System.getProperty("user.home")
+    //val fileName = path + "/" + "raytracer.png"
+    //new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
   }
 
 }

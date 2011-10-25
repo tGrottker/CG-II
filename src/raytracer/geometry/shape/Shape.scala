@@ -1,7 +1,7 @@
 package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
-import cg2.vecmath.Vector
+import raytracer.scene.Hit
 
 /**
  * The base class of all shapes.
@@ -19,6 +19,6 @@ trait Shape {
    * @return The point where the ray hits the shape, wrapped in a Some or None, if the ray does not hit the Shape.
    * @throws NoHitException If the ray does not hit the shape.
    */
-  def intersect(ray: Ray): Option[Vector]
+  def intersect(ray: Ray): Option[Hit]
 
 }

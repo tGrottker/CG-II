@@ -2,6 +2,7 @@ package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
 import cg2.vecmath.Vector
+import raytracer.scene.Hit
 
 /**
  * Representation of an invisible plane.
@@ -15,11 +16,11 @@ class Plane(origin: Vector, normal: Vector) extends Shape {
   /**
    * @inheritDoc
    */
-  override def intersect(ray: Ray): Option[Vector] = {
+  override def intersect(ray: Ray): Option[Hit] = {
     if (normal.dot(ray.direction) == 0) return None
     val m = (normal.dot(origin) - normal.dot(ray.origin)) / normal.dot(ray.direction)
     if (m < 0) return None
-    Some(ray.getPoint(m))
+    Some(new Hit(ray.getPoint(m), this))
   }
 
 }

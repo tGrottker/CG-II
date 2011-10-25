@@ -20,18 +20,18 @@ class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
 
   val farPlane    = new Plane(max, new Vector( 0, 0,-1))
   val rightPlane  = new Plane(max, new Vector( 1, 0, 0))
-  val topPlane    = new Plane(max, new Vector( 0, 1, 0))
+  val topPlane    = new Plane(  max, new Vector( 0, 1, 0))
 
-  val planes = List(nearPlane, leftPlane, bottomPlane, farPlane, rightPlane, topPlane)
+  val planes = List(nearPlane, leftPlane, bottomPlane, rightPlane, topPlane)
 
   /**
    * @inheritDoc
    */
-  override def intersect(ray: Ray): Option[Vector] = {
+  override def intersect(ray: Ray): Option[Hit] = {
      var hits: List[Hit] = List()
      planes.foreach(plane => {
      val a = plane.intersect(ray)
-      if (a != None) hits = new Hit(a.get, this) :: hits
+      if (a != None) hits = a.get :: hits
     })
 
     var closestHit: Option[Hit] = None
@@ -50,9 +50,7 @@ class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
       }
     })
 
-    val hit = closestHit.getOrElse(return None).getPoint
-    Some(hit)
-    //None
+    closestHit
   }
 
 }

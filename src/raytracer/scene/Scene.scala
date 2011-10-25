@@ -41,7 +41,7 @@ class Scene(private var shapes : List[Shape] = List()) {
     var hits: List[Hit] = List()
     shapes.foreach(shape => {
       val a = shape.intersect(ray)
-      if (a != None) hits = new Hit(a.get, shape) :: hits
+      if (a != None) hits = a.get :: hits
     })
     if (hits.isEmpty) return None
 
