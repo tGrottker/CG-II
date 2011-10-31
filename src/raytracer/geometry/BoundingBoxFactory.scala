@@ -1,6 +1,6 @@
 package raytracer.geometry
 
-import shape.{AxisAlignedBoundingBox, ColoredShape}
+import shape.{Sphere, ColoredPlane, AxisAlignedBoundingBox, ColoredShape}
 
 /**
  * Factory for AxisAlignedBoundingBoxes.
@@ -28,7 +28,21 @@ object BoundingBoxFactory {
    * @return The BoundingBox of the shapes.
    */
   def getBoundingBox(cShapes: List[ColoredShape]): AxisAlignedBoundingBox = {
-
+    var minX, minY, minZ, maxX, maxY, maxZ: Option[Float] = None
+    cShapes.foreach(shape => {
+      shape match{
+        case s: Sphere => {
+          minX=s.center.x - s.radius
+          maxX=s.center.x + s.radius
+          minY=s.center.y - s.radius
+          maxY=s.center.y + s.radius
+          minZ=s.center.z - s.radius
+          maxZ=s.center.z + s.radius
+        }
+        case cp: ColoredPlane =>
+        case _ =>
+      }
+    })
   }
 
 }
