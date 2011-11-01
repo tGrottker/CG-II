@@ -32,8 +32,8 @@ object BoundingBoxFactory {
     cShapes.foreach(shape => {
       shape match{
         case s: Sphere => {
-          minX=s.center.x - s.radius
-          maxX=s.center.x + s.radius
+          minX = Some(s.center.x - s.radius)  // TODO surround with Some
+          maxX=s.center.x + s.radius          // TODO check for the smallest
           minY=s.center.y - s.radius
           maxY=s.center.y + s.radius
           minZ=s.center.z - s.radius
@@ -41,7 +41,7 @@ object BoundingBoxFactory {
         }
         case cp: ColoredPlane =>
         case _ =>
-      }
+      }                                       // TODO missing return
     })
   }
 
