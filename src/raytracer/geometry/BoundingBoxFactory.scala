@@ -55,7 +55,7 @@ object BoundingBoxFactory {
       }
 
     })
-    new AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get))
+    AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get))
   }
 
 }

@@ -12,7 +12,7 @@ import raytracer.scene.Hit
  * @time: 14:32
  */
 
-class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
+case class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
 
   val nearPlane   = new Plane(min, new Vector( 0, 0, 1))
   val leftPlane   = new Plane(min, new Vector(-1, 0, 0))
