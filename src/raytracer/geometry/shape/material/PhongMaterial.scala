@@ -1,6 +1,6 @@
 package raytracer.geometry.shape.material
 
-import cg2.vecmath.Color
+import cg2.vecmath.{Vector, Color}
 
 /**
  *
@@ -9,8 +9,8 @@ import cg2.vecmath.Color
  * @date 31.10.11
  * @time 10:22
  */
-class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, phongExponent: Float) {
+case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, phongExponent: Float) {
 
-  //def shade(point: Vector): Color
+  def shade(point: Vector): Color = throw new UnsupportedOperationException("Not implemented yet")
 
 }
