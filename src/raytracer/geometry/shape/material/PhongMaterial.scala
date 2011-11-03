@@ -11,6 +11,6 @@ import cg2.vecmath.Color
  */
 class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, phongExponent: Float) {
 
-  def shade(point: Vector): Color
+  //def shade(point: Vector): Color
 
 }
