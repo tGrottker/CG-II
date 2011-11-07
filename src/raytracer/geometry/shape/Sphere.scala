@@ -1,5 +1,6 @@
 package raytracer.geometry.shape
 
+import material.Material
 import raytracer.geometry.Ray
 import cg2.vecmath.{Vector, Color}
 import raytracer.scene.Hit
@@ -15,7 +16,7 @@ import raytracer.scene.Hit
  * @param radius The radius of the Sphere.
  * @param color The color of the Sphere.
  */
-case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, color: Color) extends Shape with ColoredShape{
+case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, material: Material) extends Shape with ColoredShape{
 
   /**
    * @inheritDoc
@@ -39,7 +40,7 @@ case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, color: 
    * @inheritDoc
    */
   override def getColor(point: Vector): Color = {
-    color
+    material.shade(point)
   }
 
 }
