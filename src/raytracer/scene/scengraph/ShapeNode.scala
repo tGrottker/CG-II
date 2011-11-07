@@ -4,6 +4,7 @@ import raytracer.geometry.shape.{Shape, ColoredShape}
 import raytracer.geometry.Ray
 import raytracer.scene.Hit
 import cg2.vecmath.{Color, Vector, Matrix}
+import raytracer.geometry.shape.material.Material
 
 /**
  *
@@ -12,7 +13,7 @@ import cg2.vecmath.{Color, Vector, Matrix}
  * @date 27.10.11
  * @time 12:30
  */
-case class ShapeNode(mother: Option[SceneNode], var transform: Matrix, shape: Shape) extends SceneNode{
+case class ShapeNode(mother: Option[SceneNode], var transform: Matrix, shape: Shape, material: Material) extends SceneNode{
 
   // TODO improve intersect function with transform
 
@@ -23,6 +24,7 @@ case class ShapeNode(mother: Option[SceneNode], var transform: Matrix, shape: Sh
       case cs: ColoredShape => Some(cs.getColor(point))
       case _ => None
     }
+    //material.shade(point)
   }
 
 }

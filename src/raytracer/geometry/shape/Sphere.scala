@@ -15,7 +15,7 @@ import raytracer.scene.Hit
  * @param radius The radius of the Sphere.
  * @param color The color of the Sphere.
  */
-case class Sphere(center: Vector = new Vector(0,0,0), radius: Float, color: Color) extends Shape with ColoredShape{
+case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, color: Color) extends Shape with ColoredShape{
 
   /**
    * @inheritDoc

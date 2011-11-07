@@ -1,5 +1,6 @@
 package raytracer
 
+import geometry.Ray
 import geometry.shape.{ColoredShape, Sphere, ColoredPlane}
 import scene.scengraph.GroupNode
 import scene.{Scene, Camera}
