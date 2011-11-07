@@ -1,12 +1,10 @@
 package raytracer
 
-import geometry.Ray
-import geometry.shape.material.ColorMaterial
 import geometry.shape.{ColoredShape, Sphere, ColoredPlane}
-import scene.scengraph.GroupNode
+import scene.lighting.material.ColorMaterial
 import scene.{Scene, Camera}
 import cg2.warmup.{ImageGenerator, Painter}
-import cg2.vecmath.{Vector, Matrix, Color}
+import cg2.vecmath.{Vector, Color}
 
 /**
  * Main class of the raytracer.
