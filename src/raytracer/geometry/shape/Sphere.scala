@@ -31,7 +31,7 @@ case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, materia
     if (sqrt == 0) return Some(new Hit(ray.getPoint(-p / 2), this))
     val t1 = -p / 2 + sqrt
     val t2 = -p / 2 - sqrt
-    val t = math.max(math.max(t1, 0), math.max(t2, 0))
+    val t = math.min(math.max(t1, 0), math.max(t2, 0))
     if (t == 0) return None
     Some(new Hit(ray.getPoint(t.floatValue()), this))
   }

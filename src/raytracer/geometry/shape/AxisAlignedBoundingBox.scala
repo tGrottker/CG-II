@@ -1,39 +1,57 @@
 package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
-import cg2.vecmath.Vector
 import raytracer.scene.Hit
+import raytracer.scene.lighting.material.Material
+import cg2.vecmath.{Color, Vector}
 
+// TODO documentation
 /**
- * 
+ *
  *
  * @author Dennis Koenig
  * @date: 25.10.11
  * @time: 14:32
+ *
+ * @param min
+ * @param max
  */
 
-case class AxisAlignedBoundingBox(min: Vector, max: Vector) extends Shape{
+case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material) extends Shape with ColoredShape{
 
-  val nearPlane   = new Plane(min, new Vector( 0, 0, 1))
-  val leftPlane   = new Plane(min, new Vector(-1, 0, 0))
-  val bottomPlane = new Plane(min, new Vector( 0,-1, 0))
+  val nearPlane   = new ColoredPlane(min, new Vector( 0, 0, 1), material)
+  val leftPlane   = new ColoredPlane(min, new Vector(-1, 0, 0), material)
+  val bottomPlane = new ColoredPlane(min, new Vector( 0,-1, 0), material)
 
-  val farPlane    = new Plane(max, new Vector( 0, 0,-1))
-  val rightPlane  = new Plane(max, new Vector( 1, 0, 0))
-  val topPlane    = new Plane(  max, new Vector( 0, 1, 0))
+  val farPlane    = new ColoredPlane(max, new Vector( 0, 0,-1), material)
+  val rightPlane  = new ColoredPlane(max, new Vector( 1, 0, 0), material)
+  val topPlane    = new ColoredPlane(max, new Vector( 0, 1, 0), material)
 
-  val planes = List(nearPlane, leftPlane, bottomPlane, rightPlane, topPlane)
+  val planes = List(nearPlane, leftPlane, bottomPlane, farPlane, rightPlane, topPlane)
+
+  override def getColor(point: Vector): Color = material.shade(point)
+
+  private def hitInRange(hit: Hit): Boolean = {
+    val epsilon = 0.001F
+    val point = hit.getPoint
+    if (!(point.x <= max.x + epsilon && point.x + epsilon >= min.x)) return false
+    if (!(point.y <= max.y + epsilon && point.y + epsilon >= min.y)) return false
+    if (!(point.z <= max.z + epsilon && point.z + epsilon >= min.z)) return false
+    //println(true)
+    true
+  }
 
   /**
    * @inheritDoc
    */
   override def intersect(ray: Ray): Option[Hit] = {
-     var hits: List[Hit] = List()
-     planes.foreach(plane => {
-     val a = plane.intersect(ray)
-      if (a != None) hits = a.get :: hits
+    var hits: List[Hit] = List()
+    planes.foreach(plane => {
+      val a = plane.intersect(ray)
+      if (a != None){
+        if (hitInRange(a.get)) hits = a.get :: hits
+      }
     })
-
     var closestHit: Option[Hit] = None
 
     hits.foreach(hit => {

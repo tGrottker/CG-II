@@ -1,6 +1,6 @@
 package raytracer
 
-import geometry.shape.{ColoredShape, Sphere, ColoredPlane}
+import geometry.shape.{AxisAlignedBoundingBox, ColoredShape, Sphere, ColoredPlane}
 import scene.lighting.material.ColorMaterial
 import scene.{Scene, Camera}
 import cg2.warmup.{ImageGenerator, Painter}
@@ -22,7 +22,9 @@ class Raytracer extends Painter{
   val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new ColorMaterial(new Color(0,0,0.6F)))
   val plane = new ColoredPlane(new Vector( 0, -0.5F, 0), new Vector( 0, 1, 0), new ColorMaterial(new Color(0.3F,0.2F,0)))
 
-  val scene = new Scene(List(sphere, sphere2, sphere3, sphere4, plane))
+  val aabb = new AxisAlignedBoundingBox(new Vector(-1,3,-18), new Vector(1,4,-16), new ColorMaterial(new Color(0,0,1)))
+
+  val scene = new Scene(List(aabb, sphere, sphere2, sphere3, sphere4, plane))
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
 
@@ -41,9 +43,9 @@ object Main{
 
   def main(args: Array[String]){
 
-    //val path = System.getProperty("user.home")
-    //val fileName = path + "/" + "raytracer.png"
-    //new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+    val path = "pic"
+    val fileName = path + "/" + "raytracer_002.png"
+    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
   }
 
 }

@@ -2,6 +2,7 @@ package raytracer.geometry
 
 import shape._
 import cg2.vecmath.Vector
+import raytracer.scene.lighting.material.NoMaterial
 
 /**
  * Factory for AxisAlignedBoundingBoxes.
@@ -55,7 +56,7 @@ object BoundingBoxFactory {
       }
 
     })
-    AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get))
+    AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get), NoMaterial)
   }
 
 }
