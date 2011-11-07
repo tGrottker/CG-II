@@ -1,7 +1,7 @@
 package raytracer.geometry.shape
 
 import cg2.vecmath.{Color, Vector}
-import material.Material
+import raytracer.scene.lighting.material.Material
 
 /**
  * Representation of a visible plane.

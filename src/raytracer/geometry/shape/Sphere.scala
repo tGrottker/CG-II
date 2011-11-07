@@ -1,9 +1,9 @@
 package raytracer.geometry.shape
 
-import material.Material
 import raytracer.geometry.Ray
 import cg2.vecmath.{Vector, Color}
 import raytracer.scene.Hit
+import raytracer.scene.lighting.material.Material
 
 /**
  * Representation of a sphere.

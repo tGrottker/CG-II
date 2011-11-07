@@ -1,4 +1,4 @@
-package raytracer.geometry.shape.material
+package raytracer.scene.lighting.material
 
 import cg2.vecmath.{Color, Vector}
 
