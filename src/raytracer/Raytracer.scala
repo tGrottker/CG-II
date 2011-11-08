@@ -43,9 +43,9 @@ object Main{
 
   def main(args: Array[String]){
 
-    val path = "pic"
-    val fileName = path + "/" + "raytracer_002.png"
-    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+    //val path = "pic"
+    //val fileName = path + "/" + "raytracer_002.png"
+    //new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
   }
 
 }

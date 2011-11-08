@@ -20,7 +20,7 @@ class Plane(origin: Vector, normal: Vector) extends Shape {
     if (normal.dot(ray.direction) == 0) return None
     val m = (normal.dot(origin) - normal.dot(ray.origin)) / normal.dot(ray.direction)
     if (m < 0) return None
-    Some(new Hit(ray.getPoint(m), this))
+    Some(new Hit(ray, m, this))
   }
 
 }
