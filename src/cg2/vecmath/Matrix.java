@@ -188,9 +188,9 @@ public final class Matrix {
    * form world space into camera space.
    * 
    * @param eye
-   *          The eye point.
+   *          The eye hit.
    * @param center
-   *          The lookat point.
+   *          The lookat hit.
    * @param up
    *          The up vector.
    * @return The rotation matrix.
@@ -432,12 +432,12 @@ public final class Matrix {
   }
 
   /**
-   * Transform a point by the current matrix. The homogenous coordinate is
+   * Transform a hit by the current matrix. The homogenous coordinate is
    * assumed to be 1.0.
    * 
    * @param v
-   *          The point.
-   * @return The transformed point.
+   *          The hit.
+   * @return The transformed hit.
    */
   public Vector transformPoint(Vector v) {
     final float x = get(0, 0) * v.x + get(1, 0) * v.y + get(2, 0) * v.z
@@ -455,7 +455,7 @@ public final class Matrix {
    * 
    * @param v
    *          The direction vector.
-   * @return The transformed point.
+   * @return The transformed hit.
    */
   public Vector transformDirection(Vector v) {
     float x = get(0, 0) * v.x + get(1, 0) * v.y + get(2, 0) * v.z;
@@ -471,7 +471,7 @@ public final class Matrix {
    * 
    * @param v
    *          The normal.
-   * @return The transformed point.
+   * @return The transformed hit.
    */
   public Vector transformNormal(Vector v) {
     return transformDirection(v);

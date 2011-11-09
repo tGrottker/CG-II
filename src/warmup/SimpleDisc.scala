@@ -15,8 +15,8 @@ class SimpleDisc extends Painter{
   /**
    * Gives the color of a pixel, calculating the color with the implicit circle.
    *
-   * @param x The x-coordinate of the point.
-   * @param y The y-coordinate of the point.
+   * @param x The x-coordinate of the hit.
+   * @param y The y-coordinate of the hit.
    * @param width The picture width.
    * @param height The picture height.
    * @return The color of the pixel.

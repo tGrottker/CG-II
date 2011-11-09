@@ -136,7 +136,7 @@ public final class Color implements Comparable<Color> {
   }
 
   /**
-   * Convert a floating point component from the interval [0.0, 1.0] to an
+   * Convert a floating hit component from the interval [0.0, 1.0] to an
    * integral component in the interval [0, 255]
    * 
    * @param c

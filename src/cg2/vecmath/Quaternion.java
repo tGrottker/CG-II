@@ -15,7 +15,7 @@ package cg2.vecmath;
 import java.lang.Math;
 
 /**
- * A 4-element quaternion represented by float precision floating point x,y,z,w
+ * A 4-element quaternion represented by float precision floating hit x,y,z,w
  * coordinates. The quaternion is always normalized.
  * 
  */
