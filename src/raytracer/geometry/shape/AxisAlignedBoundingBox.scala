@@ -29,7 +29,7 @@ case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material) 
 
   val planes = List(nearPlane, leftPlane, bottomPlane, farPlane, rightPlane, topPlane)
 
-  override def getColor(point: Vector): Color = material.shade(point)
+  override def getColor(hit: Hit): Color = material.shade(hit)
 
   private def hitInRange(hit: Hit): Boolean = {
     val epsilon = 0.001F

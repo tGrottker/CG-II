@@ -17,9 +17,9 @@ import raytracer.geometry.Ray
 case class Hit(ray: Ray, factor: Float, shape: Shape) {
 
   /**
-   * Returns the hit point.
+   * Returns the hit hit.
    *
-   * @return The hit point.
+   * @return The hit hit.
    */
   def getPoint = ray.getPoint(factor)
 

@@ -1,9 +1,10 @@
 package raytracer
 
-import geometry.shape.{AxisAlignedBoundingBox, ColoredShape, Sphere, ColoredPlane}
+import geometry.shape._
 import scene.lighting.material.ColorMaterial
 import scene.{Scene, Camera}
 import cg2.warmup.{ImageGenerator, Painter}
+import util.Random
 import cg2.vecmath.{Vector, Color}
 
 /**
@@ -16,22 +17,38 @@ import cg2.vecmath.{Vector, Color}
 class Raytracer extends Painter{
 
   val cam = new Camera(angle = 30, aspectRatio = 1)
-  val sphere  = new Sphere(new Vector( 0, 0, -15), radius = 1, new ColorMaterial(new Color(1,0,0)))
-  val sphere2 = new Sphere(new Vector(-1, 0, -18), radius = 1, new ColorMaterial(new Color(0,1,0)))
-  val sphere3 = new Sphere(new Vector( 1, 0, -20), radius = 1, new ColorMaterial(new Color(0,0,1)))
-  val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new ColorMaterial(new Color(0,0,0.6F)))
-  val plane = new ColoredPlane(new Vector( 0, -0.5F, 0), new Vector( 0, 1, 0), new ColorMaterial(new Color(0.3F,0.2F,0)))
 
-  val aabb = new AxisAlignedBoundingBox(new Vector(-1,3,-18), new Vector(1,4,-16), new ColorMaterial(new Color(0,0,1)))
+  var l: List[Shape] = Nil
 
-  val scene = new Scene(List(aabb, sphere, sphere2, sphere3, sphere4, plane))
+  val random = new Random
+
+  for (i <- 0 to 9){
+    l = new Sphere(center = new Vector(i-4.5F, 1, -20), radius = 0.4F, material = new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
+  }
+  for (i <- 0 to 9){
+    l = new Sphere(center = new Vector(i-4.5F, 2, -20), radius = 0.4F, material = new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
+  }
+
+  l = new ColoredPlane(new Vector(0,-0.5F,0), new Vector(0,1,0), new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
+
+  //val sphere  = new Sphere(new Vector( 0, 0, -15), radius = 1, new ColorMaterial(new Color(1,0,0)))
+  //val sphere2 = new Sphere(new Vector(-1, 0, -18), radius = 1, new ColorMaterial(new Color(0,1,0)))
+  //val sphere3 = new Sphere(new Vector( 1, 0, -20), radius = 1, new ColorMaterial(new Color(0,0,1)))
+  //val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new ColorMaterial(new Color(0,0,0.6F)))
+  //val plane = new ColoredPlane(new Vector( 0, -0.5F, 0), new Vector( 0, 1, 0), new ColorMaterial(new Color(0.3F,0.2F,0)))
+
+  //val aabb = new AxisAlignedBoundingBox(new Vector(-1,3,-18), new Vector(1,4,-16), new ColorMaterial(new Color(0,0,1)))
+
+  //l = sphere :: sphere2 :: sphere3 :: sphere4 :: plane :: aabb :: l
+
+  val scene = new Scene(l)
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
 
     val ray = cam.getRay(x, y, nx, ny)
     val hit = scene.intersect(ray)
     hit.getOrElse(return new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())).getShape match {
-      case cs: ColoredShape => cs.getColor(hit.get.getPoint)
+      case cs: ColoredShape => cs.getColor(hit.get)
       case _ => new Color(0.5.floatValue(),0.5.floatValue(),0.5.floatValue())
     }
 
@@ -43,9 +60,9 @@ object Main{
 
   def main(args: Array[String]){
 
-    //val path = "pic"
-    //val fileName = path + "/" + "raytracer_002.png"
-    //new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+    val path = "pic"
+    val fileName = path + "/" + "raytracer_003.png"
+    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
   }
 
 }

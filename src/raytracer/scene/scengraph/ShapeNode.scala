@@ -3,8 +3,8 @@ package raytracer.scene.scengraph
 import raytracer.geometry.shape.{Shape, ColoredShape}
 import raytracer.geometry.Ray
 import raytracer.scene.Hit
-import cg2.vecmath.{Color, Vector, Matrix}
-import raytracer.geometry.shape.material.Material
+import cg2.vecmath.{Color, Matrix}
+import raytracer.scene.lighting.material.Material
 
 /**
  *
@@ -19,12 +19,12 @@ case class ShapeNode(mother: Option[SceneNode], var transform: Matrix, shape: Sh
 
   def intersect(ray: Ray): Option[Hit] = shape.intersect(ray)
 
-  def getColor(point: Vector): Option[Color] = {
+  def getColor(hit: Hit): Option[Color] = {
     shape match {
-      case cs: ColoredShape => Some(cs.getColor(point))
+      case cs: ColoredShape => Some(cs.getColor(hit))
       case _ => None
     }
-    //material.shade(point)
+    //material.shade(hit)
   }
 
 }

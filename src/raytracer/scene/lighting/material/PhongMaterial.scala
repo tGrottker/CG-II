@@ -1,6 +1,7 @@
 package raytracer.scene.lighting.material
 
-import cg2.vecmath.{Vector, Color}
+import cg2.vecmath.Color
+import raytracer.scene.Hit
 
 /**
  * Material for PhongLighting.
@@ -19,6 +20,6 @@ case class PhongMaterial(ambient: Color, diffuse: Color, specular: Color, phongE
   /**
    * @inheritDoc
    */
-  override def shade(point: Vector): Color = throw new UnsupportedOperationException("Not implemented yet")
+  override def shade(hit: Hit): Color = throw new UnsupportedOperationException("Not implemented yet")
 
 }

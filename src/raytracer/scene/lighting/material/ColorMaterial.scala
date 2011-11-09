@@ -1,6 +1,7 @@
 package raytracer.scene.lighting.material
 
-import cg2.vecmath.{Color, Vector}
+import cg2.vecmath.Color
+import raytracer.scene.Hit
 
 /**
  * This Material just holds a Color.
@@ -14,6 +15,6 @@ case class ColorMaterial(color: Color) extends Material{
   /**
    * @inheritDoc
    */
-  override def shade(point: Vector): Color = color
+  override def shade(hit: Hit): Color = color
 
 }

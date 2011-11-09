@@ -2,6 +2,7 @@ package raytracer.geometry.shape
 
 import cg2.vecmath.{Color, Vector}
 import raytracer.scene.lighting.material.Material
+import raytracer.scene.Hit
 
 /**
  * Representation of a visible plane.
@@ -19,8 +20,8 @@ case class ColoredPlane(origin: Vector, normal: Vector, material: Material) exte
   /**
    * @inheritDoc
    */
-  override def getColor(point: Vector): Color = {
-    material.shade(point)
+  override def getColor(hit: Hit): Color = {
+    material.shade(hit)
   }
 
 }

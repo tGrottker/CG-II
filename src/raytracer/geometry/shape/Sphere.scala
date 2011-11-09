@@ -39,8 +39,8 @@ case class Sphere(center: Vector = new Vector(0,0,0), radius: Float = 1, materia
   /**
    * @inheritDoc
    */
-  override def getColor(point: Vector): Color = {
-    material.shade(point)
+  override def getColor(hit: Hit): Color = {
+    material.shade(hit)
   }
 
 }
