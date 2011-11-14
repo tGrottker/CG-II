@@ -26,12 +26,19 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
   }
 
   /**
+   * Adds a Shape to the Scene.
+   *
+   * @param shape The Shape to add to the Scene.
+   */
+  def getAmbientLight(): Color = ambientLight
+
+  /**
    * Adds a Light to the Scene.
    *
-   * @param pl The Light to add to the Scene.
+   * @param l The Light to add to the Scene.
    */
-  def addLight(pl: PointLight){
-    if (!lights.contains(pl)) lights = pl :: lights
+  def addLight(l: Light){
+    if (!lights.contains(l)) lights = l :: lights
   }
   /**
    * Removes a Shape from the Scene.
@@ -47,8 +54,8 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
    *
    * @param pl The Light to remove from the Scene.
    */
-  def removeLight(pl: PointLight){
-    lights = lights.filterNot(element => element == pl)
+  def removeLight(l: Light){
+    lights = lights.filterNot(element => element == l)
   }
   /**
    * Intersects all Shapes with a Ray.
