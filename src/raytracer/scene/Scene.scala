@@ -1,7 +1,9 @@
 package raytracer.scene
 
+import lighting.Light
 import raytracer.geometry.Ray
 import raytracer.geometry.shape.{ColoredShape, Shape}
+import cg2.vecmath.Color
 
 /**
  * Representation of a scene.
@@ -12,7 +14,7 @@ import raytracer.geometry.shape.{ColoredShape, Shape}
  *
  * @param shapes A List of all Shapes of the Scene.
  */
-class Scene(private var shapes : List[Shape] = List()) {
+class Scene(private var shapes : List[Shape] = List(), private var lights: List[Light] = List(), ambientLight: Color) {
 
   /**
    * Adds a Shape to the Scene.
