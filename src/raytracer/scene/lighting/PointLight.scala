@@ -12,6 +12,6 @@ import cg2.vecmath.{Vector, Color}
  * @param position The position, at the origin by default.
  * @param color The Color of the PointLight.
  */
-case class PointLight(position: Vector = new Vector(0,0,0), color: Color) extends Light{
+case class PointLight(pos: Vector = new Vector(0,0,0), color: Color) extends Light(position = pos){
 
 }

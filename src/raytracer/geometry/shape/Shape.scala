@@ -2,6 +2,7 @@ package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
 import raytracer.scene.Hit
+import cg2.vecmath.Vector
 
 /**
  * The base class of all shapes.
@@ -20,5 +21,14 @@ trait Shape {
    * @throws NoHitException If the ray does not hit the shape.
    */
   def intersect(ray: Ray): Option[Hit]
+
+
+  /**
+   * Returns the normal of a point on the Shape.
+   *
+   * @param point The point on the surface of the Shape.
+   * @return The normal at the given point.
+   */
+  def getNormal(point: Vector): Vector
 
 }

@@ -23,4 +23,6 @@ class Plane(origin: Vector, normal: Vector) extends Shape {
     Some(new Hit(ray, m, this))
   }
 
+  override def getNormal(point: Vector): Vector = normal
+
 }

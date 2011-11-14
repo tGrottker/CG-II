@@ -1,5 +1,7 @@
 package raytracer.scene.lighting
 
+import cg2.vecmath.Vector
+
 /**
  * Base of all Lights.
  *
@@ -7,6 +9,8 @@ package raytracer.scene.lighting
  * @date 07.11.11
  * @time 10:34
  */
-trait Light {
+abstract class Light(val position: Vector) {
+
+  def getPosition: Vector = position
 
 }

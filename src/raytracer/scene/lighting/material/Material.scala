@@ -1,7 +1,7 @@
 package raytracer.scene.lighting.material
 
 import cg2.vecmath.Color
-import raytracer.scene.Hit
+import raytracer.scene.{Scene, Hit}
 
 /**
  * Representation of any Material.
@@ -18,6 +18,6 @@ trait Material {
    * @param hit The hit to get the Color.
    * @return The Color of the hit.
    */
-  def shade(hit: Hit): Color
+  def shade(hit: Hit, scene: Scene): Color
 
 }

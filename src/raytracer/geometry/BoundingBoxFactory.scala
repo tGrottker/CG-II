@@ -3,6 +3,7 @@ package raytracer.geometry
 import shape._
 import cg2.vecmath.Vector
 import raytracer.scene.lighting.material.NoMaterial
+import raytracer.scene.Scene
 
 /**
  * Factory for AxisAlignedBoundingBoxes.
@@ -19,8 +20,8 @@ object BoundingBoxFactory {
    * @param cShape The ColoredShape.
    * @return The BoundingBox of the shape.
    */
-  def getBoundingBox(cShape: ColoredShape): AxisAlignedBoundingBox = {
-    getBoundingBox(List(cShape))
+  def getBoundingBox(cShape: ColoredShape, scene: Scene): AxisAlignedBoundingBox = {
+    getBoundingBox(List(cShape), scene)
   }
 
   /**
@@ -29,7 +30,7 @@ object BoundingBoxFactory {
    * @param cShapes The List of ColoredShapes.
    * @return The BoundingBox of the shapes.
    */
-  def getBoundingBox(cShapes: List[ColoredShape]): AxisAlignedBoundingBox = {
+  def getBoundingBox(cShapes: List[ColoredShape], scene: Scene): AxisAlignedBoundingBox = {
     var minX, minY, minZ, maxX, maxY, maxZ: Option[Float] = None
 
     cShapes.foreach(shape => {
@@ -56,7 +57,7 @@ object BoundingBoxFactory {
       }
 
     })
-    AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get), NoMaterial)
+    AxisAlignedBoundingBox(new Vector(minX.get, minY.get, minZ.get), new Vector(maxX.get, maxY.get, maxZ.get), NoMaterial, scene)
   }
 
 }

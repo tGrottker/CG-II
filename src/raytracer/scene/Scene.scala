@@ -16,6 +16,8 @@ import cg2.vecmath.Color
  */
 class Scene(private var shapes : List[Shape] = List(), private var lights: List[Light] = List(), ambientLight: Color) {
 
+  def getLights() : List[Light] = lights
+
   /**
    * Adds a Shape to the Scene.
    *

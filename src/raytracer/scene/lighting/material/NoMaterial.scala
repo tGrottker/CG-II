@@ -1,7 +1,7 @@
 package raytracer.scene.lighting.material
 
 import cg2.vecmath.Color
-import raytracer.scene.Hit
+import raytracer.scene.{Scene, Hit}
 
 /**
  *
@@ -12,6 +12,6 @@ import raytracer.scene.Hit
  */
 object NoMaterial extends Material{
 
-  override def shade(hit: Hit): Color = throw new UnsupportedOperationException("A NoMaterial has no Color!")
+  override def shade(hit: Hit, scene: Scene): Color = throw new UnsupportedOperationException("A NoMaterial has no Color!")
 
 }

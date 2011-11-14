@@ -1,9 +1,9 @@
 package raytracer.geometry.shape
 
 import raytracer.geometry.Ray
-import raytracer.scene.Hit
 import raytracer.scene.lighting.material.Material
 import cg2.vecmath.{Color, Vector}
+import raytracer.scene.{Scene, Hit}
 
 // TODO documentation
 /**
@@ -17,19 +17,19 @@ import cg2.vecmath.{Color, Vector}
  * @param max
  */
 
-case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material) extends Shape with ColoredShape{
+case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material, scene: Scene) extends Shape with ColoredShape{
 
-  val nearPlane   = new ColoredPlane(min, new Vector( 0, 0, 1), material)
-  val leftPlane   = new ColoredPlane(min, new Vector(-1, 0, 0), material)
-  val bottomPlane = new ColoredPlane(min, new Vector( 0,-1, 0), material)
+  val nearPlane   = new ColoredPlane(min, new Vector( 0, 0, 1), material, scene)
+  val leftPlane   = new ColoredPlane(min, new Vector(-1, 0, 0), material, scene)
+  val bottomPlane = new ColoredPlane(min, new Vector( 0,-1, 0), material, scene)
 
-  val farPlane    = new ColoredPlane(max, new Vector( 0, 0,-1), material)
-  val rightPlane  = new ColoredPlane(max, new Vector( 1, 0, 0), material)
-  val topPlane    = new ColoredPlane(max, new Vector( 0, 1, 0), material)
+  val farPlane    = new ColoredPlane(max, new Vector( 0, 0,-1), material, scene)
+  val rightPlane  = new ColoredPlane(max, new Vector( 1, 0, 0), material, scene)
+  val topPlane    = new ColoredPlane(max, new Vector( 0, 1, 0), material, scene)
 
   val planes = List(nearPlane, leftPlane, bottomPlane, farPlane, rightPlane, topPlane)
 
-  override def getColor(hit: Hit): Color = material.shade(hit)
+  override def getColor(hit: Hit): Color = material.shade(hit, scene)
 
   private def hitInRange(hit: Hit): Boolean = {
     val epsilon = 0.001F
@@ -70,5 +70,7 @@ case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material) 
 
     closestHit
   }
+
+  override def getNormal(point: Vector): Vector = throw new UnsupportedOperationException("Not implemented yet.")
 
 }
