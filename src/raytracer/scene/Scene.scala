@@ -1,6 +1,6 @@
 package raytracer.scene
 
-import lighting.Light
+import lighting.{PointLight, Light}
 import raytracer.geometry.Ray
 import raytracer.geometry.shape.{ColoredShape, Shape}
 import cg2.vecmath.Color
@@ -26,6 +26,14 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
   }
 
   /**
+   * Adds a Light to the Scene.
+   *
+   * @param pl The Light to add to the Scene.
+   */
+  def addLight(pl: PointLight){
+    if (!lights.contains(pl)) lights = pl :: lights
+  }
+  /**
    * Removes a Shape from the Scene.
    *
    * @param shape The Shape to remove from the Scene.
@@ -34,6 +42,14 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
     shapes = shapes.filterNot(element => element == shape)
   }
 
+  /**
+   * Removes a Light from the Scene.
+   *
+   * @param pl The Light to remove from the Scene.
+   */
+  def removeLight(pl: PointLight){
+    lights = lights.filterNot(element => element == pl)
+  }
   /**
    * Intersects all Shapes with a Ray.
    *
