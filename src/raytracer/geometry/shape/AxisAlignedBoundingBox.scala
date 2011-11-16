@@ -5,9 +5,8 @@ import raytracer.scene.lighting.material.Material
 import cg2.vecmath.{Color, Vector}
 import raytracer.scene.{Scene, Hit}
 
-// TODO documentation
 /**
- *
+ * Representation of a visible AxisAlignedBoundingBox.
  *
  * @author Dennis Koenig
  * @date: 25.10.11
@@ -15,6 +14,8 @@ import raytracer.scene.{Scene, Hit}
  *
  * @param min
  * @param max
+ * @param material
+ * @param scene
  */
 
 case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material, scene: Scene) extends Shape with ColoredShape{
@@ -29,8 +30,17 @@ case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material, 
 
   val planes = List(nearPlane, leftPlane, bottomPlane, farPlane, rightPlane, topPlane)
 
+  /**
+   * Returns the color.
+   *
+   * @param hit.
+   */
   override def getColor(hit: Hit): Color = material.shade(hit, scene)
-
+  /**
+   * Checking the hit. Is the hit in range or not?
+   *
+   * @param hit.
+   */
   private def hitInRange(hit: Hit): Boolean = {
     val epsilon = 0.001F
     val point = hit.getPoint
@@ -42,7 +52,9 @@ case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material, 
   }
 
   /**
-   * @inheritDoc
+   * Returns the closesHit.
+   *
+   * @param ray.
    */
   override def intersect(ray: Ray): Option[Hit] = {
     var hits: List[Hit] = List()
@@ -71,6 +83,11 @@ case class AxisAlignedBoundingBox(min: Vector, max: Vector, material: Material, 
     closestHit
   }
 
+  /**
+   * Normalize a vector.
+   *
+   * @param point.
+   */
   override def getNormal(point: Vector): Vector = throw new UnsupportedOperationException("Not implemented yet.")
 
 }
