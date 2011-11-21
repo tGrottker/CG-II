@@ -3,6 +3,7 @@ package raytracer.scene.lighting.material
 import cg2.vecmath.Color
 import raytracer.scene.{Scene, Hit}
 import raytracer.scene.lighting.PointLight
+import raytracer.geometry.Ray
 
 /**
  * Material for PhongLighting.
@@ -25,6 +26,10 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
     var diff: Option[Color] = None
     var spec: Option[Color] = None
     scene.getLights().foreach(light => {
+
+      val shadowRay = Ray(ori = hit.getPoint, dir = light.getPosition.sub(hit.getPoint).normalize(), tMin = 1e-2F, tMax = light.getPosition.sub(hit.getPoint).length())
+      val hits = scene.intersectGetAll(shadowRay)
+
       val nsv = hit.shape.getNormal(hit.getPoint).mult(light.getPosition.sub(hit.getPoint).normalize())
       val ns = hit.shape.getNormal(hit.getPoint).dot(light.getPosition.sub(hit.getPoint).normalize())
       val r = nsv.mult(2F).mult(hit.getShape.getNormal(hit.getPoint)).sub(light.getPosition.sub(hit.getPoint).normalize())
@@ -33,12 +38,20 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
       if (angle > 0) vra = math.pow(angle, phongExponent).floatValue()
       light match{
         case pl: PointLight => {
-          if (diff != None){
-            diff = Some(diff.get.add(kDiffuse.modulate(pl.color.modulate(ns))))
-          } else diff = Some(kDiffuse.modulate(pl.color.modulate(ns)))
-          if (spec != None){
-            spec = Some(spec.get.add(kSpecular.modulate(pl.color.modulate(vra))))
-          } else spec = Some(kSpecular.modulate(pl.color.modulate(vra)))
+          if (hits.isEmpty){
+            if (diff != None){
+              diff = Some(diff.get.add(kDiffuse.modulate(pl.color.modulate(ns))))
+            } else diff = Some(kDiffuse.modulate(pl.color.modulate(ns)))
+            if (spec != None){
+              spec = Some(spec.get.add(kSpecular.modulate(pl.color.modulate(vra))))
+            } else spec = Some(kSpecular.modulate(pl.color.modulate(vra)))
+          } else {
+            // diff und spec schwarz
+            if (diff != None) diff = Some(diff.get.add(new Color(0,0,0)))
+            else diff = Some(new Color(0,0,0))
+            if (spec != None) spec = Some(spec.get.add(new Color(0,0,0)))
+            else spec = Some(new Color(0,0,0))
+          }
         }
         case _ =>
       }

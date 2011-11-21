@@ -12,7 +12,7 @@ import cg2.vecmath.Vector
  * @param origin The origin of the ray.
  * @param direction The direction of the ray, should be normalized.
  */
-case class Ray(ori: Vector, dir: Vector) {
+case class Ray(private val ori: Vector, private val dir: Vector, tMin: Float = 0F, tMax: Float = Float.PositiveInfinity) {
 
   def origin = ori
 

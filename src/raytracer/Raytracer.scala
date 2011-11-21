@@ -52,7 +52,7 @@ class Raytracer extends Painter{
   scene.addLight(new PointLight(new Vector( 0, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
   scene.addLight(new PointLight(new Vector(-1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
   scene.addLight(new PointLight(new Vector( 1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
-  scene.addLight(new PointLight(new Vector( 0, 1, -19), new Color(0.8F,0.8F,0.8F)))
+  scene.addLight(new PointLight(new Vector( 0, 3, -16), new Color(0.7F,0.7F,0.7F)))
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
 

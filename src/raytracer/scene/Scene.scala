@@ -65,11 +65,7 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
    * @param ray The Ray, all Shapes will be intersect with.
    */
   def intersect(ray: Ray): Option[Hit] = {
-    var hits: List[Hit] = List()
-    shapes.foreach(shape => {
-      val a = shape.intersect(ray)
-      if (a != None) hits = a.get :: hits
-    })
+    val hits = intersectGetAll(ray)
     if (hits.isEmpty) return None
 
     var closestHit: Option[Hit] = None
@@ -89,6 +85,17 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
     })
 
     closestHit
+  }
+
+  def intersectGetAll(ray: Ray): List[Hit] = {
+    var hits: List[Hit] = Nil
+    shapes.foreach(shape => {
+      val a = shape.intersect(ray)
+      if (a != None){
+        if (a.get.factor >= ray.tMin && a.get.factor <= ray.tMax) hits = a.get :: hits
+      }
+    })
+    hits
   }
 
 }
