@@ -29,7 +29,8 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
       val ns = hit.shape.getNormal(hit.getPoint).dot(light.getPosition.sub(hit.getPoint).normalize())
       val r = nsv.mult(2F).mult(hit.getShape.getNormal(hit.getPoint)).sub(light.getPosition.sub(hit.getPoint).normalize())
       var vra = 0F
-      if (hit.ray.direction.mult(-1F).dot(r) > 0) vra = math.pow(hit.ray.direction.mult(-1F).dot(r), phongExponent).floatValue()
+      val angle = hit.ray.direction.mult(-1F).dot(r)
+      if (angle > 0) vra = math.pow(angle, phongExponent).floatValue()
       light match{
         case pl: PointLight => {
           if (diff != None){
