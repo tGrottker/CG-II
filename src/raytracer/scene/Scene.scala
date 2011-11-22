@@ -71,12 +71,12 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
     var closestHit: Option[Hit] = None
 
     hits.foreach(hit => {
-      if (hit.getPoint.z < 0) {
+      if (hit.factor > 0) {
         hit.getShape match{
           case _: ColoredShape => {
             if (closestHit == None) closestHit = Some(hit)
             else {
-              if (closestHit.get.getPoint.z.abs > hit.getPoint.z.abs) closestHit = Some(hit)
+              if (closestHit.get.factor > hit.factor) closestHit = Some(hit)
             }
           }
           case _ =>
