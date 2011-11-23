@@ -3,7 +3,8 @@ package raytracer.scene.lighting.material
 import raytracer.scene.{Scene, Hit}
 import raytracer.scene.lighting.PointLight
 import raytracer.geometry.Ray
-import cg2.vecmath.Color
+import cg2.vecmath.{Vector, Color}
+import raytracer.geometry.shape.ColoredShape
 
 /**
  * Material for PhongLighting.
@@ -22,25 +23,28 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
   /**
    * inheritDoc
    */
-  override def shade(hit: Hit, scene: Scene): Color = shade(hit, scene, 4)
+  override def shade(hit: Hit, scene: Scene): Color = shade(hit, scene, 2)
 
   private def shade(hit: Hit, scene: Scene, depth: Int): Color = {
 
-    if (depth <= 0) return new Color(0,0,0)       // guard-condition for recursion
+    if (depth <= 0) return new Color(0,0,0)             // guard-condition for recursion
 
     var diffuse: Option[Color] = None
     var specular: Option[Color] = None
 
-    val p = hit.getPoint
-    val n = hit.getShape.getNormal(hit.getPoint)
-    val v = hit.ray.direction.mult(-1)
+    val offset = 1e-2F                                  // offset for rounding errors
 
-    scene.getLights().foreach(light => {          // lighting for each light
+    val p = hit.getPoint                                // hit point
+    val n = hit.getShape.getNormal(p)                   // normal at p
+    val v = hit.ray.direction.mult(-1)                  // direction to origin of ray
 
-      val s = light.getPosition.sub(p).normalize()
-      val r = ((n.mult(s)).mult(n).mult(2)).sub(s)
 
-      val shadowRay = Ray(ori = p, dir = s, tMin = 1e-2F, tMax = light.getPosition.sub(p).length())
+    scene.getLights().foreach(light => {                // lighting for each light
+
+      val s = light.getPosition.sub(p).normalize()      // direction to light
+      val r = reflect(s, n)                             // reflection of s
+
+      val shadowRay = new Ray(ori = p, dir = s, tMin = offset, tMax = light.getPosition.sub(p).length())
 
       val lightBlocker = scene.intersectGetAll(shadowRay)
 
@@ -51,10 +55,10 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
 
       light match {
         case pl: PointLight => {
-          if (lightBlocker.isEmpty){              // no shadow
+          if (lightBlocker.isEmpty){                    // no shadow
             diffuse = Some(diffuse.getOrElse(new Color(0,0,0)).add(pl.color.modulate(nDotS)))
             specular = Some(specular.getOrElse(new Color(0,0,0)).add(pl.color.modulate(vDotRPowPhongExponent)))
-          } else {                                // shadow
+          } else {                                      // shadow
             diffuse = Some(diffuse.getOrElse(new Color(0,0,0)))
             specular = Some(specular.getOrElse(new Color(0,0,0)))
           }
@@ -65,18 +69,44 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
     })
 
 
-    var lighting = (scene.getAmbientLight().modulate(kAmbient)).add(diffuse.getOrElse(new Color(0,0,0)).modulate(kDiffuse)).add(specular.getOrElse(new Color(0,0,0)).modulate(kSpecular))
+    val ambi = scene.getAmbientLight().modulate(kAmbient)
+    val diff = diffuse.getOrElse(new Color(0,0,0)).modulate(kDiffuse)
+    val spec = specular.getOrElse(new Color(0,0,0)).modulate(kSpecular)
+
+    var lighting = ambi.add(diff).add(spec)//(scene.getAmbientLight().modulate(kAmbient)).add(diffuse.getOrElse(new Color(0,0,0)).modulate(kDiffuse)).add(specular.getOrElse(new Color(0,0,0)).modulate(kSpecular))
+
+    //if (depth == 1) lighting = new Color(1,0,0)
 
     // reflection == recursion
-    val rv = (n.mult(n.dot(v)).mult(2)).sub(v).normalize()
+    val rv = reflect(v, n)
     if (rv.dot(n) > 0){
-      val recursion = scene.intersect(Ray(p, rv, tMin = 1e-2F))
+      val recursion = scene.intersect(Ray(p, rv, tMin = offset))
       if (recursion != None){
-        val reflected = shade(recursion.get, scene, depth - 1).modulate(kReflection)
-        lighting = lighting.add(reflected)
+
+        val hit = recursion.get
+        val shape = hit.getShape
+
+        shape match {
+          case cs: ColoredShape => lighting = lighting.add(cs.getColor(hit))
+          case _ =>
+        }
+
+        //val reflected = shade(recursion.get, scene, depth - 1)//.modulate(kReflection)
+        //lighting = lighting.add(reflected)
       }
     }
     lighting.clip()
+  }
+
+  /**
+   * Returns a reflected direction.
+   *
+   * @param directionToOrigin Any origin to reflect.
+   * @param normal The normal the direction gets reflected on.
+   * @return The reflected direction.
+   */
+  private def reflect(directionToOrigin: Vector, normal: Vector): Vector = {
+    normal.mult(2 * normal.dot(directionToOrigin)).sub(directionToOrigin).normalize()
   }
 
 }

@@ -22,37 +22,28 @@ class Raytracer extends Painter{
   var shapes: List[Shape] = Nil
   var lights: List[Light] = Nil
 
-
-  /*val random = new Random
-
-  for (i <- 0 to 9){
-    l = new Sphere(center = new Vector(i-4.5F, 1, -20), radius = 0.4F, material = new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
-  }
-  for (i <- 0 to 9){
-    l = new Sphere(center = new Vector(i-4.5F, 2, -20), radius = 0.4F, material = new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
-  }
-
-  l = new ColoredPlane(new Vector(0,-0.5F,0), new Vector(0,1,0), new ColorMaterial(new Color(random.nextFloat(),random.nextFloat(),random.nextFloat()))) :: l
-  */
-  //val sphere  = new Sphere(new Vector( 0, 0, -15), radius = 1, new ColorMaterial(new Color(1,0,0)))
-  //val sphere2 = new Sphere(new Vector(-1, 0, -18), radius = 1, new ColorMaterial(new Color(0,1,0)))
-  //val sphere3 = new Sphere(new Vector( 1, 0, -20), radius = 1, new ColorMaterial(new Color(0,0,1)))
-  //val sphere4 = new Sphere(new Vector( 2, 0, -10), radius = 1, new ColorMaterial(new Color(0,0,0.6F)))
-  //val plane = new ColoredPlane(new Vector( 0, -0.5F, 0), new Vector( 0, 1, 0), new ColorMaterial(new Color(0.3F,0.2F,0)))
-
-  //val aabb = new AxisAlignedBoundingBox(new Vector(-1,3,-18), new Vector(1,4,-16), new ColorMaterial(new Color(0,0,1)))
-
-  //l = sphere :: sphere2 :: sphere3 :: sphere4 :: plane :: aabb :: l
+  val color00 = new Color(0.0F,0.0F,0.0F)
+  val color01 = new Color(0.1F,0.1F,0.1F)
+  val color02 = new Color(0.2F,0.2F,0.2F)
+  val color03 = new Color(0.3F,0.3F,0.3F)
+  val color04 = new Color(0.4F,0.4F,0.4F)
+  val color05 = new Color(0.5F,0.5F,0.5F)
+  val color06 = new Color(0.6F,0.6F,0.6F)
+  val color07 = new Color(0.7F,0.7F,0.7F)
+  val color08 = new Color(0.8F,0.8F,0.8F)
+  val color09 = new Color(0.9F,0.9F,0.9F)
+  val color10 = new Color(1.0F,1.0F,1.0F)
 
   val scene = new Scene(shapes, lights, new Color(0.7F,0.7F,0.7F))
-  scene.addShape(ColoredPlane(new Vector(0, -0.5F, 0), new Vector(0,1,0), new PhongMaterial(kAmbient = new Color(0F,0F,0), kDiffuse = new Color(1,1,1), kSpecular = new Color(1,1,1), phongExponent = 800, kReflection = new Color(0.5F,0.5F,0.5F)), scene))
+  scene.addShape(ColoredPlane(new Vector(0, -0.5F, 0), new Vector(0,1,0), new PhongMaterial(kAmbient = color00, kDiffuse = new Color(1,1,0), kSpecular = color10, phongExponent = 800, kReflection = new Color(0.5F,0.5F,0.5F)), scene))
   scene.addShape(Sphere(center = new Vector( 0, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0.5F,0,0), kDiffuse = new Color(1,0,0), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
   scene.addShape(Sphere(center = new Vector( 2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0.5F,0), kDiffuse = new Color(0,1,0), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
   scene.addShape(Sphere(center = new Vector(-2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0,0.5F), kDiffuse = new Color(0,0,1), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
   //scene.addLight(new PointLight(new Vector( 0, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
   //scene.addLight(new PointLight(new Vector(-1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
   //scene.addLight(new PointLight(new Vector( 1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
-  scene.addLight(new PointLight(new Vector( 0, 3, -16), new Color(0.5F,0.5F,0.5F)))
+  //scene.addLight(new PointLight(new Vector( 0, 3, -16), color08))
+  scene.addLight(new PointLight(new Vector( 0, 4, -20), color08))
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
 
@@ -73,7 +64,7 @@ object Main{
 
     //new Raytracer().pixelColorAt(380, 500, 750, 750)
 
-    //println(new Vector(0,-0.5F,0).length())
+    //println(new Vector(0,-0.5F,0).dot(new Vector(0,-0.5F,0)))
 
     val path = "pic"
     val fileName = path + "/" + "raytracer_004.png"
