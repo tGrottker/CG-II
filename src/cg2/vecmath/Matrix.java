@@ -465,12 +465,12 @@ public final class Matrix {
   }
 
   /**
-   * Transform a norm by the current matrix. The homogenous coordinate is
+   * Transform a normal by the current matrix. The homogenous coordinate is
    * assumed to be 0.0. The matrix is assumed to be orthonormal with a uniform
    * scaling component at most (ie. a rigid-body transformation).
    * 
    * @param v
-   *          The norm.
+   *          The normal.
    * @return The transformed hit.
    */
   public Vector transformNormal(Vector v) {

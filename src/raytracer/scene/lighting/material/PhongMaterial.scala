@@ -73,11 +73,10 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
       val recursion = scene.intersect(Ray(p, rv, tMin = 1e-2F))
       if (recursion != None){
         val reflected = shade(recursion.get, scene, depth - 1).modulate(kReflection)
-        println(reflected)
         lighting = lighting.add(reflected)
       }
     }
-    lighting.clip()
+    lighting
   }
 
 }
