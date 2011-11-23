@@ -71,9 +71,14 @@ object Main{
 
   def main(args: Array[String]){
 
-    val path = "pic"
-    val fileName = path + "/" + "raytracer_004.png"
-    new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+    //val path = "pic"
+    //val fileName = path + "/" + "raytracer_004.png"
+    //new ImageGenerator(new Raytracer(), 750, 750,fileName, "png")
+
+    val r = new Raytracer()
+    r.pixelColorAt(380, 500, 750, 750)
+
+    //println(new Color(0.6F,0.6F,0.6F).add(new Color(0.6F,0.6F,0.6F)).clip())
   }
 
 }

@@ -24,10 +24,10 @@ trait Shape {
 
 
   /**
-   * Returns the normal of a point on the Shape.
+   * Returns the norm of a point on the Shape.
    *
    * @param point The point on the surface of the Shape.
-   * @return The normal at the given point.
+   * @return The norm at the given point.
    */
   def getNormal(point: Vector): Vector
 

@@ -11,7 +11,9 @@ import raytracer.scene.Hit
  * @date 25.10.11
  * @time 14:25
  */
-class Plane(origin: Vector, normal: Vector) extends Shape {
+class Plane(origin: Vector, norm: Vector) extends Shape {
+
+  val normal = norm.normalize()
 
   /**
    * @inheritDoc

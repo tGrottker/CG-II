@@ -12,7 +12,7 @@ import raytracer.scene.{Scene, Hit}
  * @time 12:30
  *
  * @param origin The origin of the plane.
- * @param normal The normal of the plane, should be standardised.
+ * @param norm The norm of the plane, should be standardised.
  * @param color The color of the ColoredPlane.
  */
 case class ColoredPlane(origin: Vector, normal: Vector, material: Material, scene: Scene) extends Plane(origin: Vector, normal: Vector) with ColoredShape{
