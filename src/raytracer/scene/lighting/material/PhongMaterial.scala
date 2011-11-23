@@ -76,7 +76,7 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
         lighting = lighting.add(reflected)
       }
     }
-    lighting
+    lighting.clip()
   }
 
 }

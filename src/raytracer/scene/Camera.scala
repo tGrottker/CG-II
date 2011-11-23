@@ -20,10 +20,13 @@ import cg2.vecmath.Vector
 class Camera(eyePosition: Vector = new Vector(0,0,0), gazeDirection: Vector = new Vector(0,0,-1), upVector: Vector = new Vector(0, 1, 0), angle: Float, width: Float = 1, aspectRatio: Float = 4/3.floatValue()) {
 
   val height = width * aspectRatio
-  val distance = width / (2 * math.tan((angle * math.Pi / 180) / 2))
+  val distance = width / (2 * math.tan((angle * math.Pi / 180) / 2)).floatValue()
 
-  def getRay(x: Int, y: Int, nx: Int, ny: Int) = new Ray(eyePosition, new Vector(((x + 0.5) *  width / nx -  width / 2).floatValue(),
-                                                                                 ((y + 0.5) * height / ny - height / 2).floatValue(),
-                                                                                 -distance.floatValue()).normalize())
+  def getRay(x: Int, y: Int, nx: Int, ny: Int) = {
+    val direction = new Vector(width  * (-0.5 + (x + 0.5) / nx).floatValue(),
+                               height * (-0.5 + (y + 0.5) / ny).floatValue(),
+                               -distance).normalize()
+    new Ray(eyePosition, direction)
 
+  }
 }

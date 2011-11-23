@@ -18,9 +18,9 @@ class Plane(origin: Vector, normal: Vector) extends Shape {
    */
   override def intersect(ray: Ray): Option[Hit] = {
     if (normal.dot(ray.direction) == 0) return None
-    val m = (normal.dot(origin) - normal.dot(ray.origin)) / normal.dot(ray.direction)
-    if (m < 0) return None
-    Some(new Hit(ray, m, this))
+    val t = (normal.dot(origin) - normal.dot(ray.origin)) / normal.dot(ray.direction)
+    if (t < 0) return None
+    Some(new Hit(ray, t, this))
   }
 
   override def getNormal(point: Vector): Vector = normal
