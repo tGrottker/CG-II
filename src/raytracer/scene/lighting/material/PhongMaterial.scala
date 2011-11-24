@@ -105,4 +105,43 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
     normal.mult(2 * normal.dot(directionToOrigin)).sub(directionToOrigin).normalize()
   }
 
+  /**
+   * Returns the direction of the refracted Ray.
+   *
+   * @param n1 Refraction index of the medium in front of the border.
+   * @param n2 Refraction index of the medium behind the border.
+   * @param incoming The direction of the incoming ray.
+   * @param normal The normal.
+   * @param beta The angle between the direction of the outgoing ray and the normal.
+   */
+  private def refract(n1: Float, n2: Float, incoming: Vector, normal: Vector, beta: Float): Vector = {
+    val n = n1 / n2
+    val outgoing = reflect(incoming, normal)
+    val angleI = math.acos(outgoing.dot(normal))
+    val angleO = math.asin(n * math.sin(angleI))
+
+    val ni = incoming.mult(n)
+    val nCosI = n * math.cos(angleI)
+    val sqrt = math.sqrt(1 - math.sin(angleO) * math.sin(angleO))
+
+    ni.add(normal.mult(nCosI - sqrt))
+  }
+
+  /**
+   * Schlick-aproximation.
+   *
+   * @param n1 Refraction index of the medium in front of the border.
+   * @param n2 Refraction index of the medium behind the border.
+   * @param alpha The angle between the direction of the incoming ray and the normal.
+   */
+  private def schlick(n1: Float, n2: Float, alpha: Float): (Float, Float) = {
+    val cosCos = math.cos(alpha) * math.cos(alpha)  //(0.5 * (1 + math.cos(2 * beta))).floatValue()
+
+    if (((n1/n2) * (n1/n2)) * (cosCos) <= 1) return (1,0)
+
+    val r0 = (n1 - n2) / (n1 + n2)
+    val r = r0 + (1 - r0) * math.pow(1 - cosCos, 5)
+    (r,1 - r)
+  }
+
 }
