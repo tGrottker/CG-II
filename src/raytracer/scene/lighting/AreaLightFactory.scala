@@ -18,7 +18,7 @@ import cg2.vecmath.{Color, Vector}
  */
 object AreaLightFactory {
 
-  def createPointLights(xCount: Int, yCount: Int, zCount, distanceBetweenLightSources: Float, originMin: Vector, lightColor: Color): List[PointLight] = {
+  def createPointLights(xCount: Int, yCount: Int, zCount: Int, distanceBetweenLightSources: Float, originMin: Vector, lightColor: Color): List[PointLight] = {
     var lightList: List[PointLight] = Nil
     val numberOfLights = xCount * yCount * zCount
     val lightingColor = lightColor.modulate(1 / numberOfLights)
