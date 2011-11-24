@@ -73,9 +73,7 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
     val diff = diffuse.getOrElse(new Color(0,0,0)).modulate(kDiffuse)
     val spec = specular.getOrElse(new Color(0,0,0)).modulate(kSpecular)
 
-    var lighting = ambi.add(diff).add(spec)//(scene.getAmbientLight().modulate(kAmbient)).add(diffuse.getOrElse(new Color(0,0,0)).modulate(kDiffuse)).add(specular.getOrElse(new Color(0,0,0)).modulate(kSpecular))
-
-    //if (depth == 1) lighting = new Color(1,0,0)
+    var lighting = ambi.add(diff).add(spec)
 
     // reflection == recursion
     val rv = reflect(v, n)
@@ -91,8 +89,6 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
           case _ =>
         }
 
-        //val reflected = shade(recursion.get, scene, depth - 1)//.modulate(kReflection)
-        //lighting = lighting.add(reflected)
       }
     }
     lighting.clip()

@@ -35,14 +35,10 @@ class Raytracer extends Painter{
   val color10 = new Color(1.0F,1.0F,1.0F)
 
   val scene = new Scene(shapes, lights, new Color(0.7F,0.7F,0.7F))
-  scene.addShape(ColoredPlane(new Vector(0, -0.5F, 0), new Vector(0,1,0), new PhongMaterial(kAmbient = color00, kDiffuse = new Color(1,1,0), kSpecular = color10, phongExponent = 800, kReflection = new Color(0.5F,0.5F,0.5F)), scene))
-  scene.addShape(Sphere(center = new Vector( 0, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0.5F,0,0), kDiffuse = new Color(1,0,0), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
-  scene.addShape(Sphere(center = new Vector( 2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0.5F,0), kDiffuse = new Color(0,1,0), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
-  scene.addShape(Sphere(center = new Vector(-2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0,0.5F), kDiffuse = new Color(0,0,1), kSpecular = new Color(1,1,1), phongExponent = 80, kReflection = new Color(0.5F,0.5F,0.5F)) ,scene = scene))
-  //scene.addLight(new PointLight(new Vector( 0, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
-  //scene.addLight(new PointLight(new Vector(-1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
-  //scene.addLight(new PointLight(new Vector( 1, 3, 0.5F), new Color(0.08F,0.08F,0.08F)))
-  //scene.addLight(new PointLight(new Vector( 0, 3, -16), color08))
+  scene.addShape(ColoredPlane(new Vector(0, -0.5F, 0), new Vector(0,1,0), new PhongMaterial(kAmbient = new Color(0.3F,0.3F,0), kDiffuse = new Color(1,1,0), kSpecular = color10, phongExponent = 800, kReflection = color05), scene))
+  scene.addShape(Sphere(center = new Vector( 0, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0.5F,0,0), kDiffuse = new Color(1,0,0), kSpecular = color10, phongExponent = 80, kReflection = color05) ,scene = scene))
+  scene.addShape(Sphere(center = new Vector( 2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0.5F,0), kDiffuse = new Color(0,1,0), kSpecular = color10, phongExponent = 80, kReflection = color05) ,scene = scene))
+  scene.addShape(Sphere(center = new Vector(-2, 1, -20), radius = 0.9F, material = new PhongMaterial(kAmbient = new Color(0,0,0.5F), kDiffuse = new Color(0,0,1), kSpecular = color10, phongExponent = 80, kReflection = color05) ,scene = scene))
   scene.addLight(new PointLight(new Vector( 0, 4, -20), color08))
 
   override def pixelColorAt(x: Int, y: Int, nx: Int, ny: Int): Color = {
