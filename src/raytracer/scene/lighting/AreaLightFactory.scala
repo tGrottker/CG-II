@@ -20,13 +20,16 @@ object AreaLightFactory {
 
   def createPointLights(xCount: Int, yCount: Int, zCount: Int, distanceBetweenLightSources: Float, originMin: Vector, lightColor: Color): List[PointLight] = {
     var lightList: List[PointLight] = Nil
-    val numberOfLights = xCount * yCount * zCount
+    val numberOfLights = (xCount * yCount * zCount).floatValue()
     val lightingColor = lightColor.modulate(1 / numberOfLights)
 
-    for (xC <- 0 to xCount){
-      for (yC <- 0 to yCount){
-        for (zC <- 0 to zCount){
-          lightList = new PointLight(new Vector(originMin.x + xC * distanceBetweenLightSources, originMin.y + yC * distanceBetweenLightSources, originMin.z + yC * distanceBetweenLightSources), lightingColor) :: lightList
+    for (xC <- 0 until xCount){
+      for (yC <- 0 until yCount){
+        for (zC <- 0 until zCount){
+          val xPos: Float = xC * distanceBetweenLightSources + originMin.x
+          val yPos: Float = yC * distanceBetweenLightSources + originMin.y
+          val zPos: Float = zC * distanceBetweenLightSources + originMin.z
+          lightList = new PointLight(new Vector(xPos, yPos, zPos), lightingColor) :: lightList
         }
       }
     }
