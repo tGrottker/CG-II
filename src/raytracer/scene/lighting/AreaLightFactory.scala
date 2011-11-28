@@ -9,17 +9,18 @@ import cg2.vecmath.{Vector, Color}
  * @date 24.11.11
  * @time 10:15
  *
- * @param xCount The max lenght in x-direction
- * @param yCount The max lenght in y-direction
- * @param zCount The max lenght in z-direction
- * @param distanceBetweenLightSources The distance between two lights
- * @param originMin Center of the AreaLight
- * @param lightColor The Color of the AreaLight
  */
 object AreaLightFactory {
 
   /**
+   * Creates a number of lights in a BoundingBox
    *
+   * @param xCount The max lenght in x-direction
+   * @param yCount The max lenght in y-direction
+   * @param zCount The max lenght in z-direction
+   * @param distanceBetweenLightSources The distance between two lights
+   * @param originMin Center of the AreaLight
+   * @param lightColor The Color of the AreaLight
    */
   def createLightBox(xCount: Int, yCount: Int, zCount: Int, distanceBetweenLightSources: Float, originMin: Vector, lightColor: Color): List[PointLight] = {
     var lightList: List[PointLight] = Nil
@@ -41,7 +42,7 @@ object AreaLightFactory {
   }
 
   /**
-   *
+   * Creates a number of lights in an area.
    *
    * @param a First aspect of the "Area-light".
    * @param b Second aspect of the "Area-light".
