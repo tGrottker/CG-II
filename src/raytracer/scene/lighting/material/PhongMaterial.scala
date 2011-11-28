@@ -3,8 +3,8 @@ package raytracer.scene.lighting.material
 import raytracer.scene.{Scene, Hit}
 import raytracer.scene.lighting.PointLight
 import raytracer.geometry.Ray
-import cg2.vecmath.{Vector, Color}
 import raytracer.geometry.shape.ColoredShape
+import cg2.vecmath.{Vector, Color}
 
 /**
  * Material for PhongLighting.
@@ -18,12 +18,12 @@ import raytracer.geometry.shape.ColoredShape
  * @param kSpecular The Specular factor.
  * @param phongExponent The exponent of the Phong-Term.
  */
-case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, phongExponent: Float, kReflection: Color) extends Material{
+case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, phongExponent: Float, kReflection: Color, refractionIndex: Float = 0, kRefraction: Color = new Color(0,0,0)) extends Material{
 
   /**
    * inheritDoc
    */
-  override def shade(hit: Hit, scene: Scene): Color = shade(hit, scene, 2)
+  override def shade(hit: Hit, scene: Scene): Color = shade(hit, scene, 4)
 
   private def shade(hit: Hit, scene: Scene, depth: Int): Color = {
 
@@ -75,8 +75,16 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
 
     var lighting = ambi.add(diff).add(spec)
 
-    // reflection == recursion
+
+
+    //val (r, t) = schlick(scene.refraction(), refractionIndex, new Vector())
+
+    // reflection
     val rv = reflect(v, n)
+
+
+    // refraction
+
     if (rv.dot(n) > 0){
       val recursion = scene.intersect(Ray(p, rv, tMin = offset))
       if (recursion != None){
@@ -110,37 +118,42 @@ case class PhongMaterial(kAmbient: Color, kDiffuse: Color, kSpecular: Color, pho
    *
    * @param n1 Refraction index of the medium in front of the border.
    * @param n2 Refraction index of the medium behind the border.
-   * @param incoming The direction of the incoming ray.
+   * @param incomingDirection The direction of the incomingDirection ray.
    * @param normal The normal.
-   * @param beta The angle between the direction of the outgoing ray and the normal.
    */
-  private def refract(n1: Float, n2: Float, incoming: Vector, normal: Vector, beta: Float): Vector = {
+  private def refract(n1: Float, n2: Float, incomingDirection: Vector, normal: Vector): Option[Vector] = {
+    if (n2 == 0) return None              // no refraction
+
     val n = n1 / n2
-    val outgoing = reflect(incoming, normal)
+    val outgoing = reflect(incomingDirection, normal)
     val angleI = math.acos(outgoing.dot(normal))
     val angleO = math.asin(n * math.sin(angleI))
 
-    val ni = incoming.mult(n)
-    val nCosI = n * math.cos(angleI)
-    val sqrt = math.sqrt(1 - math.sin(angleO) * math.sin(angleO))
+    val ni = incomingDirection.mult(n)
+    val nCosI = (n * math.cos(angleI)).floatValue()
+    val sqrt = (math.sqrt(1 - math.sin(angleO) * math.sin(angleO))).floatValue()
 
-    ni.add(normal.mult(nCosI - sqrt))
+    Some(ni.add(normal.mult(nCosI - sqrt)))
   }
+
+  //def incomingAngle(n1: Float, n2: Float, incomingDirection: Vector, normal: Vector)
 
   /**
    * Schlick-aproximation.
    *
    * @param n1 Refraction index of the medium in front of the border.
    * @param n2 Refraction index of the medium behind the border.
-   * @param alpha The angle between the direction of the incoming ray and the normal.
+   * @param alpha The angle between the direction of the incomingDirection ray and the normal.
    */
   private def schlick(n1: Float, n2: Float, alpha: Float): (Float, Float) = {
-    val cosCos = math.cos(alpha) * math.cos(alpha)  //(0.5 * (1 + math.cos(2 * beta))).floatValue()
+    if (n2 == 0) return (1,0)             // no refraction
+
+    val cosCos = math.cos(alpha) * math.cos(alpha)
 
     if (((n1/n2) * (n1/n2)) * (cosCos) <= 1) return (1,0)
 
-    val r0 = (n1 - n2) / (n1 + n2)
-    val r = r0 + (1 - r0) * math.pow(1 - cosCos, 5)
+    val r0 = (n1 - n2) * (n1 - n2) / (n1 + n2) * (n1 + n2)
+    val r = (r0 + (1 - r0) * math.pow(1 - cosCos, 5)).floatValue()
     (r,1 - r)
   }
 

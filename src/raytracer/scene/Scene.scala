@@ -14,9 +14,10 @@ import cg2.vecmath.Color
  *
  * @param shapes A List of all Shapes of the Scene.
  */
-class Scene(private var shapes : List[Shape] = List(), private var lights: List[Light] = List(), ambientLight: Color) {
+class Scene(private var shapes : List[Shape] = List(), private var lights: List[Light] = List(), ambientLight: Color, refractionIndex: Float = 1) {
 
-  def getLights() : List[Light] = lights
+  def getLights() = lights
+  def refraction() = refractionIndex
 
   /**
    * Adds a Shape to the Scene.
@@ -40,8 +41,18 @@ class Scene(private var shapes : List[Shape] = List(), private var lights: List[
    * @param l The Light to add to the Scene.
    */
   def addLight(l: Light){
-    if (!lights.contains(l)) lights = l :: lights
+    lights = l :: lights
   }
+
+  /**
+   * Adds a number of Lights to the Scene.
+   *
+   * @param l The List of Lights to add to the Scene.
+   */
+  def addLights(l: List[Light]){
+    lights = l ::: lights
+  }
+
   /**
    * Removes a Shape from the Scene.
    *
