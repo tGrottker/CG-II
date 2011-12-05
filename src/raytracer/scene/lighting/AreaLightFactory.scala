@@ -49,8 +49,7 @@ object AreaLightFactory {
    * @param n Number of Lights in v-direction.
    * @param origin The Origin of the area the lights will be placed.
    * @param u Direction of a.
-   * @param v Direction of b
-   * @param color The sum of all Light colors
+   * @param color The sum of all Light colors.
    */
   def createAreaLight(a: Float, b: Float, m: Int, n: Int, origin: Vector, u: Vector, v: Vector, color: Color): List[PointLight] = {
     val lightCount = n * m
