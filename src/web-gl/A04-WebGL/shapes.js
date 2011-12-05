@@ -120,3 +120,38 @@ TriangleFan = function(gl) {
     
 }        
     
+
+Cube = function(gl) {
+
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 36);
+
+    var vposition   = new Float32Array([    -1,-1,-1,    1,-1,-1,    1, 1,-1,       // abc
+                                            -1,-1,-1,    1, 1,-1,   -1, 1,-1,       // acd
+                                             1,-1,-1,    1, 1,-1,    1,-1, 1,       // bcf
+                                             1, 1,-1,    1,-1, 1,    1, 1, 1,       // cfg
+                                             1,-1, 1,    1, 1, 1,   -1, 1, 1,       // fgh
+                                            -1,-1, 1,    1,-1, 1,   -1, 1, 1,       // efh
+                                            -1,-1, 1,   -1, 1,-1,   -1, 1, 1,       // edh
+                                            -1,-1,-1,   -1, 1,-1,   -1,-1, 1,       // ade
+                                            -1,-1,-1,    1,-1,-1,   -1,-1, 1,       // abe
+                                             1,-1,-1,   -1,-1, 1,    1,-1, 1,       // bef
+                                             1, 1,-1,   -1, 1,-1,    1, 1, 1,       // cdg
+                                            -1, 1,-1,    1, 1, 1,   -1, 1, 1]);     // dgh
+
+    var vcolor       = new Float32Array([    1, 0, 0,    1, 0, 0,    1, 0, 0,
+                                             1, 0, 0,    1, 0, 0,    1, 0, 0,
+                                             0, 1, 0,    0, 1, 0,    0, 1, 0,
+                                             0, 1, 0,    0, 1, 0,    0, 1, 0,
+                                             0, 0, 1,    0, 0, 1,    0, 0, 1,
+                                             0, 0, 1,    0, 0, 1,    0, 0, 1,
+                                             1, 1, 0,    1, 1, 0,    1, 1, 0,
+                                             1, 1, 0,    1, 1, 0,    1, 1, 0,
+                                             0, 1, 1,    0, 1, 1,    0, 1, 1,
+                                             0, 1, 1,    0, 1, 1,    0, 1, 1,
+                                             1, 0, 1,    1, 0, 1,    1, 0, 1,
+                                             1, 0, 1,    1, 0, 1,    1, 0, 1]);
+
+    this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
+    this.shape.addVertexAttribute(gl, "vertexColor",    gl.FLOAT, 3, vcolor);
+
+}
