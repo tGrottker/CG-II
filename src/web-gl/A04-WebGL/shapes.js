@@ -121,8 +121,9 @@ TriangleFan = function(gl) {
 }        
     
 
-Cube = function(gl) {
+Cube = function(gl, l) {
 
+    var l2 = l / 2;
     this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 36);
 
     var vposition   = new Float32Array([    -1,-1,-1,    1,-1,-1,    1, 1,-1,       // abc
@@ -137,6 +138,10 @@ Cube = function(gl) {
                                              1,-1,-1,   -1,-1, 1,    1,-1, 1,       // bef
                                              1, 1,-1,   -1, 1,-1,    1, 1, 1,       // cdg
                                             -1, 1,-1,    1, 1, 1,   -1, 1, 1]);     // dgh
+
+    for (var i=0; i<108; i++){
+        vposition[i]=vposition[i] * l2;
+    }
 
     var vcolor       = new Float32Array([    1, 0, 0,    1, 0, 0,    1, 0, 0,
                                              1, 0, 0,    1, 0, 0,    1, 0, 0,
@@ -153,5 +158,93 @@ Cube = function(gl) {
 
     this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
     this.shape.addVertexAttribute(gl, "vertexColor",    gl.FLOAT, 3, vcolor);
+
+}
+
+Sphere = function (gl, radius, n, m, color1, color2){
+
+    var PI = Math.PI;
+    this.radius = radius;
+
+    this.x = function (u, v) {
+        if(u < 0 || PI < u) return 0;
+        if(v < 0 || 2*PI < v) return 0;
+        return this.radius * Math.sin(u) * Math.cos(v);
+    }
+
+    this.y = function (u, v) {
+        if(u < 0 || PI < u) return 0;
+        if(v < 0 || 2*PI < v) return 0;
+        return this.radius * Math.sin(u) * Math.sin(v);
+    }
+
+    this.z  = function (u) {
+        if(u < 0 || PI < u) return 0;
+        return this.radius * Math.cos(u);
+    }
+
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, n*m*6);
+
+    var vposition = new Float32Array(n*m*6*3);
+    var vcolor = new Float32Array(n*m*6*3);
+    var index = 0;
+    var c = color1
+    for (var i = 1; i<=n; i++){
+        for (var j = 1; j<=m; j++){
+
+            var ui1 = PI / n * i;
+            var ui0 = PI / n * (i-1);
+            var vj1 = 2 * PI / m * j;
+            var vj0 = 2 * PI / m * (j-1);
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui0, vj0);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui0, vj0);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui0);
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui1, vj0);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui1, vj0);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui1);
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui1, vj1);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui1, vj1);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui1);
+
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui0, vj0);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui0, vj0);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui0);
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui0, vj1);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui0, vj1);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui0);
+
+            vcolor[index] = c[0];
+            vposition[index++] = this.x(ui1, vj1);
+            vcolor[index] = c[1];
+            vposition[index++] = this.y(ui1, vj1);
+            vcolor[index] = c[2];
+            vposition[index++] = this.z(ui1);
+
+            c = (c == color1) ? color2 : color1;
+        }
+
+        this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
+        this.shape.addVertexAttribute(gl, "vertexColor",    gl.FLOAT, 3, vcolor);
+    }
 
 }

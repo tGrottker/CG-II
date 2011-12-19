@@ -9,7 +9,7 @@ import cg2.vecmath.{Vector, Color}
 /**
  * Material for PhongLighting.
  *
- * @author Thomas Grottker
+ * @author Thomas Grottker und Dennis Koenig
  * @date 31.10.11
  * @time 10:22
  *
