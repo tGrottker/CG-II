@@ -21,9 +21,9 @@
 */ 
 
 
-VertexBasedShape = function(gl, primitiveType, numVertices) {
+VertexBasedShape = function(gl, primitiveType, numVertices, transform) {
 
-    // arrays in which to store vertex buffers and the respective 
+    // arrays in which to store vertex buffers and the respective
     this.vertexBuffers = new Array();
     
     // remember what goemtric primitive to use for drawing
@@ -50,15 +50,22 @@ VertexBasedShape = function(gl, primitiveType, numVertices) {
        Method: draw using a vertex buffer object
     */
     this.draw = function(program) {
-    
-        // go through all types of vertex attributes 
+
+        var ntLocation = gl.getUniformLocation(program.glProgram,
+                                                "nodeTransform");
+        if(ntLocation == null) {
+            window.console.log("Warning: uniform nodeTransform not used in shader.");
+        } else {
+            gl.uniformMatrix4fv(ntLocation, false, transform);
+        }
+        // go through all types of vertex attributes
         // and enable them before drawing
         for(attribute in this.vertexBuffers) {
             //window.console.log("activating attribute: " + attribute);
             this.vertexBuffers[attribute].makeActive(program);
         }
-        
-        // perform the actual drawing of the primitive 
+
+        // perform the actual drawing of the primitive
         // using the vertex buffer object
         //window.console.log("drawing shape with " + 
         //                    this.numVertices + " vertices.");
@@ -78,10 +85,10 @@ VertexBasedShape = function(gl, primitiveType, numVertices) {
    
 */ 
 
-Triangle = function(gl) {
+Triangle = function(gl, transform) {
 
     // instantiate the shape as a member variable
-    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 3);
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 3, transform);
 
     var vposition = new Float32Array( [ 0,1,0,  -1,-1,0, 1,-1,0 ]);
     var vcolor    = new Float32Array( [ 1,0,0,  0,1,0,   0,0,1 ]);
@@ -104,10 +111,10 @@ Triangle = function(gl) {
    
 */ 
 
-TriangleFan = function(gl) {
+TriangleFan = function(gl, transform) {
 
     // instantiate the shape as a member variable
-    this.shape = new VertexBasedShape(gl, gl.TRIANGLE_FAN, 9);
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLE_FAN, 9, transform);
 
     var vposition = new Float32Array( [ 0,0,1,        0,1,0,       -0.7,0.7,0, 
                                         -1,0,0,      -0.7,-0.7,0,  0,-1,0, 
@@ -121,10 +128,10 @@ TriangleFan = function(gl) {
 }        
     
 
-Cube = function(gl, l) {
+Cube = function(gl, l, transform) {
 
     var l2 = l / 2;
-    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 36);
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, 36, transform);
 
     var vposition   = new Float32Array([    -1,-1,-1,    1,-1,-1,    1, 1,-1,       // abc
                                             -1,-1,-1,    1, 1,-1,   -1, 1,-1,       // acd
@@ -161,7 +168,7 @@ Cube = function(gl, l) {
 
 }
 
-Sphere = function (gl, radius, n, m, color1, color2){
+Sphere = function (gl, radius, n, m, color1, color2, transform){
 
     var PI = Math.PI;
     this.radius = radius;
@@ -183,7 +190,7 @@ Sphere = function (gl, radius, n, m, color1, color2){
         return this.radius * Math.cos(u);
     }
 
-    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, n*m*6);
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, n*m*6, transform);
 
     var vposition = new Float32Array(n*m*6*3);
     var vcolor = new Float32Array(n*m*6*3);
@@ -191,6 +198,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
     var c = color1
     for (var i = 1; i<=n; i++){
         for (var j = 1; j<=m; j++){
+
+            c = ((i + j) % 2 == 0) ? color1 : color2
 
             var ui1 = PI / n * i;
             var ui0 = PI / n * (i-1);
@@ -240,7 +249,6 @@ Sphere = function (gl, radius, n, m, color1, color2){
             vcolor[index] = c[2];
             vposition[index++] = this.z(ui1);
 
-            c = (c == color1) ? color2 : color1;
         }
 
         this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
