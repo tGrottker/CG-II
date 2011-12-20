@@ -116,8 +116,8 @@ TriangleFan = function(gl, transform) {
     // instantiate the shape as a member variable
     this.shape = new VertexBasedShape(gl, gl.TRIANGLE_FAN, 9, transform);
 
-    var vposition = new Float32Array( [ 0,0,1,        0,1,0,       -0.7,0.7,0, 
-                                        -1,0,0,      -0.7,-0.7,0,  0,-1,0, 
+    var vposition = new Float32Array( [ 0,0,1,        0,1,0,       -0.7,0.7,0,
+                                        -1,0,0,      -0.7,-0.7,0,  0,-1,0,
                                         0.7,-0.7,0,  1.0,0,0,      0.7,0.7,0]);
     var vcolor    = new Float32Array( [ 1,1,1,  1,0,0,  0,1,0,      
                                         0,0,1,  1,0,0,  0,1,0,  

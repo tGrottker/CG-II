@@ -26,7 +26,7 @@ window.onload = function () {
     
     // add an object to the scene
     theScene.addShape(new TriangleFan(gl));
-    //theScene.addShape(new Sphere(gl, 1, 10, 10, [1,0,0], [0,1,0], mat4.identity()));
+    theScene.addShape(new Sphere(gl, 1, 10, 10, [1,0,0], [0,1,0], mat4.identity()));
     
     // set the camera's viewpoint and viewing direction
     theScene.camera.lookAt([0,2,4], [0,0,0], [0,1,0]);
