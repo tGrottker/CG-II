@@ -285,5 +285,123 @@ Torus = function(gl, radius, radius2, N, M, col1, col2) {
    
 }        
     
+Sphere = function (gl, radius, n, m, color1, color2){
+
+    var PI = Math.PI;
+    this.radius = radius;
+
+    this.x = function (u, v) {
+        if(u < 0 || PI < u) return 0;
+        if(v < 0 || 2*PI < v) return 0;
+        return this.radius * Math.sin(u) * Math.cos(v);
+    }
+
+    this.y = function (u, v) {
+        if(u < 0 || PI < u) return 0;
+        if(v < 0 || 2*PI < v) return 0;
+        return this.radius * Math.sin(u) * Math.sin(v);
+    }
+
+    this.z  = function (u) {
+        if(u < 0 || PI < u) return 0;
+        return this.radius * Math.cos(u);
+    }
+
+    this.shape = new VertexBasedShape(gl, gl.TRIANGLES, n*m*6);
+
+    var vposition = new Float32Array(n*m*6*3);
+    var vnormal = new Float32Array(n*m*6*3);
+    var index = 0;
+    var a,b,c,n;
+
+    for (var i = 1; i<=n; i++){
+        for (var j = 1; j<=m; j++){
 
 
+            var ui1 = PI / n * i;
+            var ui0 = PI / n * (i-1);
+            var vj1 = 2 * PI / m * j;
+            var vj0 = 2 * PI / m * (j-1);
+
+
+            a = this.x(ui0, vj0);
+            b = this.y(ui0, vj0);
+            c = this.z(ui0);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+            a = this.x(ui1, vj0);
+            b = this.y(ui1, vj0);
+            c = this.z(ui1);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+            a = this.x(ui1, vj1);
+            b = this.y(ui1, vj1);
+            c = this.z(ui1);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+
+            a = this.x(ui0, vj0);
+            b = this.y(ui0, vj0);
+            c = this.z(ui0);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+            a = this.x(ui0, vj1);
+            b = this.y(ui0, vj1);
+            c = this.z(ui0);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+            a = this.x(ui1, vj1);
+            b = this.y(ui1, vj1);
+            c = this.z(ui1);
+
+
+            vnormal[index] = a;
+            vposition[index++] = a;
+            vnormal[index] = b;
+            vposition[index++] = b;
+            vnormal[index] = c;
+            vposition[index++] = c;
+
+        }
+
+    }
+
+    this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
+    this.shape.addVertexAttribute(gl, "vertexNormal", gl.FLOAT, 3, vnormal);
+
+}

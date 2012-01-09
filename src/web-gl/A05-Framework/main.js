@@ -76,6 +76,8 @@ initScene = function() {
     this.equatorMaterial = new Material([0.4, 0.4, 0.4], [0.6, 0.0, 0.0], [0.4, 0.4, 0.4], 200);
     
     // TODO: create the world sphere!
+    this.world = new Sphere(gl,0.5,32,32);
+    this.worldMaterial = new Material([0.4,0.4,0.4], [0.0,0.0,0.6], [0.4,0.4,0.4], 200);
 }
     
 /*
@@ -130,7 +132,8 @@ drawScene = function() {
         this.equatorRing.shape.draw(program);
         
     // TODO: draw some more things!
-        
+    this.worldMaterial.setUniforms(program, mv);
+    this.world.shape.draw(program);
 }
 
 /*
