@@ -311,7 +311,9 @@ Sphere = function (gl, radius, n, m, color1, color2){
 
     var vposition = new Float32Array(n*m*6*3);
     var vnormal = new Float32Array(n*m*6*3);
+    var vtexcoord = new Float32Array(n*m*6*2);
     var index = 0;
+    var index2 = 0;
     var a,b,c,n;
 
     for (var i = 1; i<=n; i++){
@@ -329,6 +331,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui0);
 
 
+            vtexcoord[index2++] = ui0 / PI;
+            vtexcoord[index2++] = vj0 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -341,6 +345,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui1);
 
 
+            vtexcoord[index2++] = ui1 / PI;
+            vtexcoord[index2++] = vj0 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -353,6 +359,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui1);
 
 
+            vtexcoord[index2++] = ui1 / PI;
+            vtexcoord[index2++] = vj1 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -366,6 +374,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui0);
 
 
+            vtexcoord[index2++] = ui0 / PI;
+            vtexcoord[index2++] = vj0 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -378,6 +388,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui0);
 
 
+            vtexcoord[index2++] = ui0 / PI;
+            vtexcoord[index2++] = vj1 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -390,6 +402,8 @@ Sphere = function (gl, radius, n, m, color1, color2){
             c = this.z(ui1);
 
 
+            vtexcoord[index2++] = ui1 / PI;
+            vtexcoord[index2++] = vj1 / (2 * PI);
             vnormal[index] = a;
             vposition[index++] = a;
             vnormal[index] = b;
@@ -403,5 +417,5 @@ Sphere = function (gl, radius, n, m, color1, color2){
 
     this.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
     this.shape.addVertexAttribute(gl, "vertexNormal", gl.FLOAT, 3, vnormal);
-
+    this.shape.addVertexAttribute(gl, "textureCoord", gl.FLOAT, 2, vtexcoord);
 }

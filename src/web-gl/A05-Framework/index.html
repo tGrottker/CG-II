@@ -27,16 +27,21 @@
         attribute vec3 vertexPosition; 
         attribute vec3 vertexNormal;
 
+        attribute vec2 textureCoord;
+
         uniform mat4 modelViewMatrix;
         uniform mat4 projectionMatrix;
         uniform mat3 normalMatrix;
         
         varying vec4 ecPosition; 
         varying vec3 ecNormal;
+
+        varying vec2 texCoord;
         
         void main() { 
         
-            // transform vertex position and normal into eye coordinates 
+            texCoord = textureCoord;
+            // transform vertex position and normal into eye coordinates
             // for lighting calculations
             ecPosition   = modelViewMatrix * vec4(vertexPosition,1.0);
             ecNormal     = normalize(normalMatrix*vertexNormal);
@@ -52,7 +57,13 @@
         precision mediump float;
         
         varying vec4  ecPosition; 
-        varying vec3  ecNormal; 
+        varying vec3  ecNormal;
+
+        varying vec2 texCoord;
+
+        uniform sampler2D testSampler;
+
+        uniform bool isWorld;
 
         // Transformation
         uniform mat4  modelViewMatrix;
@@ -117,8 +128,12 @@
             return ambient + diffuse + specular;
     
         }
-        
-        
+
+        vec3 illuminateWorld(vec3 pos, vec3 n, vec3 v){
+            return texture2D(testSampler, texCoord).rgb;
+        }
+
+
        void main() { 
         
             // normalize normal after projection
@@ -133,7 +148,12 @@
             vec3 viewdirEC = usePerspective? normalize(-ecPosition.xyz) : vec3(0,0,1);
             
             // calculate color using Blinn-Phong function
-            vec3 color = blinnPhong( ecPosition.xyz, normalEC, viewdirEC );
+            vec3 color;
+            if (isWorld) {
+                color = illuminateWorld( ecPosition.xyz, normalEC, viewdirEC );
+            } else {
+                color = blinnPhong( ecPosition.xyz, normalEC, viewdirEC );
+            }
 
             gl_FragColor = vec4(color, 1.0);
                                 
