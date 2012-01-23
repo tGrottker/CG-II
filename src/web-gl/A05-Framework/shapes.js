@@ -224,8 +224,7 @@ GenerateParametricSurface = function(gl, obj, M, N, umin, umax, vmin, vmax, col1
             
         }
     }
-    
-    // create vertex buffer objects (VBOs) 
+    // create vertex buffer objects (VBOs)
     if(this.obj.position != undefined) 
         this.obj.shape.addVertexAttribute(gl, "vertexPosition", gl.FLOAT, 3, vposition);
         
@@ -233,7 +232,7 @@ GenerateParametricSurface = function(gl, obj, M, N, umin, umax, vmin, vmax, col1
         this.obj.shape.addVertexAttribute(gl, "vertexNormal",   gl.FLOAT, 3, vnormal); 
         
     if(this.obj.texCoord != undefined) 
-        this.obj.shape.addVertexAttribute(gl, "vertexTexCoord", gl.FLOAT, 2, vtexcoord);
+        this.obj.shape.addVertexAttribute(gl, "textureCoord", gl.FLOAT, 2, vtexcoord);
 
     if(col1 != undefined && col2 != undefined) 
         this.obj.shape.addVertexAttribute(gl, "vertexColor",    gl.FLOAT, 3, vcolor);
@@ -314,7 +313,25 @@ Sphere = function (gl, radius, n, m, color1, color2){
     var vtexcoord = new Float32Array(n*m*6*2);
     var index = 0;
     var index2 = 0;
-    var a,b,c,n;
+    var n;
+
+    this.setCoords = function (index, index2, u, v) {
+        var a,b,c;
+        a = this.x(u, v);
+        b = this.y(u, v);
+        c = this.z(u);
+
+        vtexcoord[index2]       = Math.abs(-v / (2 * PI)) + 0.25;
+        vtexcoord[index2 + 1]   = -u / PI;
+
+        vnormal[index]          = a;
+        vnormal[index + 1]      = b;
+        vnormal[index + 2]      = c;
+
+        vposition[index]        = a;
+        vposition[index + 1]    = b;
+        vposition[index + 2]    = c;
+    }
 
     for (var i = 1; i<=n; i++){
         for (var j = 1; j<=m; j++){
@@ -326,91 +343,29 @@ Sphere = function (gl, radius, n, m, color1, color2){
             var vj0 = 2 * PI / m * (j-1);
 
 
-            a = this.x(ui0, vj0);
-            b = this.y(ui0, vj0);
-            c = this.z(ui0);
+            this.setCoords(index, index2, ui0, vj0);
+            index   = index  + 3;
+            index2  = index2 + 2;
 
+            this.setCoords(index, index2, ui1, vj0);
+            index   = index  + 3;
+            index2  = index2 + 2;
 
-            vtexcoord[index2++] = ui0 / PI;
-            vtexcoord[index2++] = vj0 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
+            this.setCoords(index, index2, ui1, vj1);
+            index   = index  + 3;
+            index2  = index2 + 2;
 
-            a = this.x(ui1, vj0);
-            b = this.y(ui1, vj0);
-            c = this.z(ui1);
+            this.setCoords(index, index2, ui0, vj0);
+            index   = index  + 3;
+            index2  = index2 + 2;
 
+            this.setCoords(index, index2, ui0, vj1);
+            index   = index  + 3;
+            index2  = index2 + 2;
 
-            vtexcoord[index2++] = ui1 / PI;
-            vtexcoord[index2++] = vj0 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
-
-            a = this.x(ui1, vj1);
-            b = this.y(ui1, vj1);
-            c = this.z(ui1);
-
-
-            vtexcoord[index2++] = ui1 / PI;
-            vtexcoord[index2++] = vj1 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
-
-
-            a = this.x(ui0, vj0);
-            b = this.y(ui0, vj0);
-            c = this.z(ui0);
-
-
-            vtexcoord[index2++] = ui0 / PI;
-            vtexcoord[index2++] = vj0 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
-
-            a = this.x(ui0, vj1);
-            b = this.y(ui0, vj1);
-            c = this.z(ui0);
-
-
-            vtexcoord[index2++] = ui0 / PI;
-            vtexcoord[index2++] = vj1 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
-
-            a = this.x(ui1, vj1);
-            b = this.y(ui1, vj1);
-            c = this.z(ui1);
-
-
-            vtexcoord[index2++] = ui1 / PI;
-            vtexcoord[index2++] = vj1 / (2 * PI);
-            vnormal[index] = a;
-            vposition[index++] = a;
-            vnormal[index] = b;
-            vposition[index++] = b;
-            vnormal[index] = c;
-            vposition[index++] = c;
-
+            this.setCoords(index, index2, ui1, vj1);
+            index   = index  + 3;
+            index2  = index2 + 2;
         }
 
     }
