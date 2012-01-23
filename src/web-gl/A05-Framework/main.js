@@ -62,7 +62,7 @@ initScene = function() {
     var gl = this.getGL();
     
     // this texture will be loaded automatically through the UI
-    this.daylightTexture = new Texture2D(gl, "textures/test_world_texture.gif", this);
+    this.daylightTexture = new Texture2D(gl, "textures/month01.jpg", this);
         
     // directional sunlight, defined in world coordinates
     // this object will be manipulated directly by a simulation object
@@ -76,7 +76,9 @@ initScene = function() {
     this.equatorMaterial = new Material([0.4, 0.4, 0.4], [0.6, 0.0, 0.0], [0.4, 0.4, 0.4], 200);
     
     // TODO: create the world sphere!
-    this.nightTexture = new Texture2D(gl, "earth_at_night_2048.jpg", this);
+    this.nightTexture = new Texture2D(gl, "textures/earth_at_night_2048.jpg", this);
+    this.reflectionTexture = new Texture2D(gl, "textures/earth_topography_4096.jpg", this);
+    this.cloudTexture = new Texture2D(gl, "textures/earth_clouds_2048.jpg", this);
 
     this.world = new Sphere(gl,0.5,32,32);
     this.worldMaterial = new Material([0.4,0.4,0.4], [0.0,0.0,0.6], [0.4,0.4,0.4], 200);
@@ -137,9 +139,24 @@ drawScene = function() {
     }
         
     // TODO: draw some more things!
+
+    if(this.showLights){
+        program.setUniform("nightLights", "bool", true, true);
+    } else {
+        program.setUniform("nightLights", "bool", false, true);
+    }
+
+    if(this.showClouds){
+        program.setUniform("clouds", "bool", true, true);
+    } else {
+        program.setUniform("clouds", "bool", false, true);
+    }
+
     program.setUniform("isWorld", "bool", true, true)
     this.daylightTexture.makeActive(program, "daylightSampler", 0);
     this.nightTexture.makeActive(program, "nightSampler", 1);
+    this.reflectionTexture.makeActive(program, "reflectionSampler", 2);
+    this.cloudTexture.makeActive(program, "cloudSampler", 3);
     this.worldMaterial.setUniforms(program, mv);
     this.world.shape.draw(program);
 }

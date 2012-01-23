@@ -63,8 +63,12 @@
 
         uniform sampler2D daylightSampler;
         uniform sampler2D nightSampler;
+        uniform sampler2D reflectionSampler;
+        uniform sampler2D cloudSampler;
 
         uniform bool isWorld;
+        uniform bool nightLights;
+        uniform bool clouds;
 
         // Transformation
         uniform mat4  modelViewMatrix;
@@ -134,6 +138,8 @@
 
             vec3 daytexcolor = texture2D(daylightSampler, texCoord).rgb;
             vec3 nighttexcolor = texture2D(nightSampler, texCoord).rgb;
+            vec3 reflectioncolor = texture2D(reflectionSampler, texCoord).rgb;
+            vec3 cloudcolor = texture2D(cloudSampler, texCoord).rgb;
 
             // ambient part
             vec3 ambient = vec3 (0,0,0);
@@ -141,7 +147,7 @@
             // check viewing direction - is this back-facing?
             float ndotv = dot(n,v);
             if(ndotv<0.0)
-            return vec3(0,0,0); // backface
+                return vec3(0,0,0); // backface
 
             // vector from light to current point
             vec3 l = light.direction;
@@ -159,10 +165,17 @@
             float ndoth = dot(n,h);
 
             // specular contribution
-            vec3 specular = vec3 (1,1,1) * light.color * pow(ndoth, material.shininess);
+            vec3 specular = max(vec3 (0.7) - reflectioncolor, vec3 (0.0)) * light.color * pow(ndoth, material.shininess);
 
             // return sum of all contributions
             vec3 color = ambient + diffuse + specular;
+
+            if(nightLights){
+                color = ndotl * color + (1.0 - ndotl) * nighttexcolor;
+            }
+
+            if(clouds)
+                color = color + (ndotl + 0.3) * cloudcolor;
 
             return color;
         }
