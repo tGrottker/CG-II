@@ -61,7 +61,8 @@
 
         varying vec2 texCoord;
 
-        uniform sampler2D testSampler;
+        uniform sampler2D daylightSampler;
+        uniform sampler2D nightSampler;
 
         uniform bool isWorld;
 
@@ -131,7 +132,8 @@
 
         vec3 illuminateWorld(vec3 pos, vec3 n, vec3 v){
 
-            vec3 texcolor = texture2D(testSampler, texCoord).rgb;
+            vec3 daytexcolor = texture2D(daylightSampler, texCoord).rgb;
+            vec3 nighttexcolor = texture2D(nightSampler, texCoord).rgb;
 
             // ambient part
             vec3 ambient = vec3 (0,0,0);
@@ -148,7 +150,7 @@
             float ndotl = max( dot(n,-l), 0.0);
 
             // diffuse contribution
-            vec3 diffuse = texcolor * light.color * ndotl;
+            vec3 diffuse = daytexcolor * light.color * ndotl;
 
             // half way vector between light and viewer
             vec3 h = normalize(v-l);
@@ -160,7 +162,9 @@
             vec3 specular = vec3 (1,1,1) * light.color * pow(ndoth, material.shininess);
 
             // return sum of all contributions
-            return ambient + diffuse + specular;
+            vec3 color = ambient + diffuse + specular;
+
+            return color;
         }
 
 

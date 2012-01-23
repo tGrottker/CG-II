@@ -62,7 +62,7 @@ initScene = function() {
     var gl = this.getGL();
     
     // this texture will be loaded automatically through the UI
-    //this.daylightTexture = new Texture2D(gl, "textures/test_world_texture.gif", this);
+    this.daylightTexture = new Texture2D(gl, "textures/test_world_texture.gif", this);
         
     // directional sunlight, defined in world coordinates
     // this object will be manipulated directly by a simulation object
@@ -76,8 +76,9 @@ initScene = function() {
     this.equatorMaterial = new Material([0.4, 0.4, 0.4], [0.6, 0.0, 0.0], [0.4, 0.4, 0.4], 200);
     
     // TODO: create the world sphere!
+    this.nightTexture = new Texture2D(gl, "earth_at_night_2048.jpg", this);
+
     this.world = new Sphere(gl,0.5,32,32);
-    this.testTexture = new Texture2D(gl, "textures/test_world_texture.gif");
     this.worldMaterial = new Material([0.4,0.4,0.4], [0.0,0.0,0.6], [0.4,0.4,0.4], 200);
 }
     
@@ -137,7 +138,8 @@ drawScene = function() {
         
     // TODO: draw some more things!
     program.setUniform("isWorld", "bool", true, true)
-    this.testTexture.makeActive(program, "testSampler", 0);
+    this.daylightTexture.makeActive(program, "daylightSampler", 0);
+    this.nightTexture.makeActive(program, "nightSampler", 1);
     this.worldMaterial.setUniforms(program, mv);
     this.world.shape.draw(program);
 }
